@@ -1,7 +1,43 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    artii (2.1.2)
+    concurrent-ruby (1.1.7)
     diff-lcs (1.4.4)
+    faraday (1.1.0)
+      multipart-post (>= 1.2, < 3)
+      ruby2_keywords
+    http_router (0.11.2)
+      rack (>= 1.0.0)
+      url_mount (~> 0.2.1)
+    i18n (1.8.5)
+      concurrent-ruby (~> 1.0)
+    ice_nine (0.11.2)
+    lita (4.8.0)
+      bundler (>= 2.0)
+      faraday (>= 1.0)
+      http_router (>= 0.11)
+      i18n (>= 1.8)
+      ice_nine (>= 0.11)
+      multi_json (>= 1.15)
+      puma (>= 4.3)
+      rack (>= 2.2)
+      rb-readline (>= 0.5)
+      redis-namespace (>= 1.7)
+      thor (>= 1.0)
+    lita-ascii-art (0.1.0)
+      artii (>= 2.0.4)
+      lita (>= 4.0.0)
+    multi_json (1.15.0)
+    multipart-post (2.1.1)
+    nio4r (2.5.4)
+    puma (5.1.0)
+      nio4r (~> 2.0)
+    rack (2.2.3)
+    rb-readline (0.5.5)
+    redis (4.2.5)
+    redis-namespace (1.8.0)
+      redis (>= 3.0.4)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
       rspec-expectations (~> 3.10.0)
@@ -15,12 +51,27 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.0)
+    ruby2_keywords (0.0.2)
+    strings-ansi (0.1.0)
+    thor (1.0.1)
+    tty-cursor (0.7.1)
+    tty-progressbar (0.17.0)
+      strings-ansi (~> 0.1.0)
+      tty-cursor (~> 0.7)
+      tty-screen (~> 0.7)
+      unicode-display_width (~> 1.6)
+    tty-screen (0.8.1)
+    unicode-display_width (1.7.0)
+    url_mount (0.2.1)
+      rack
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  lita-ascii-art (~> 0.1.0)
   rspec (~> 3.10)
+  tty-progressbar (~> 0.17.0)
 
 BUNDLED WITH
    2.1.4
