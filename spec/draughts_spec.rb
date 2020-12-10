@@ -39,11 +39,19 @@ end
 # Tests for RedMarker class
 describe 'RedMarker' do
     
+    it "should have a color property of red" do
+        red_marker = RedMarker.new
+        expect(red_marker.color).to eq("red")
+    end
 end
 
 # Tests for BlackMarker class
 describe 'BlackMarker' do
-    
+
+    it "should have a color property of black" do
+        black_marker = BlackMarker.new
+        expect(black_marker.color).to eq("black")
+    end
 end
 
 #Tests for KingMarker classes
