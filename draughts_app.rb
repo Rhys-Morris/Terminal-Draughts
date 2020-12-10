@@ -9,38 +9,47 @@ require_relative './errors.rb'
 # Welcome message
 def welcome 
 
-    puts "Welcome to the game!"
+    system "clear"
+    puts "
+    ██████╗░██████╗░░█████╗░██╗░░░██╗░██████╗░██╗░░██╗████████╗░██████╗
+    ██╔══██╗██╔══██╗██╔══██╗██║░░░██║██╔════╝░██║░░██║╚══██╔══╝██╔════╝
+    ██║░░██║██████╔╝███████║██║░░░██║██║░░██╗░███████║░░░██║░░░╚█████╗░
+    ██║░░██║██╔══██╗██╔══██║██║░░░██║██║░░╚██╗██╔══██║░░░██║░░░░╚═══██╗
+    ██████╔╝██║░░██║██║░░██║╚██████╔╝╚██████╔╝██║░░██║░░░██║░░░██████╔╝
+    ╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝░░╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░\n\n\n"
 
     # Progress bar
-    bar = TTY::ProgressBar.new("Loading! [:bar]", total: 100)
+    bar = TTY::ProgressBar.new("[:bar]", total: 100)
     100.times do
         sleep(0.01)
         bar.advance(1)
     end
 
-    menu_selection
+    main_menu
 end
 
 # Make a selection at main menu
-def menu_selection
+def main_menu
     prompt = TTY::Prompt.new
 
+    puts ""
     menu_selection = prompt.select("Select an option:") do |menu|
-        menu.choice "1. Start a new game", 1
-        menu.choice "2. How to play", 2
-        menu.choice "3. Display game history", 3
-        menu.choice "4. Exit program", 4
+        menu.choice "➊ Start a new game", 1
+        menu.choice "➋ How to play", 2
+        menu.choice "➌ Display game history", 3
+        menu.choice "➍ Exit program", 4
     end
 
     case menu_selection
     when 1
-        puts "Pressed 1"
+        start_game
     when 2
-        puts "Pressed 2"
+        instructions
     when 3
-        puts "Pressed 3"
+        check_win_history
     when 4
-        puts "Pressed 4"
+        puts "\nGoodbye!"
+        sleep(2)
         exit
     else
         raise InvalidMenu
@@ -54,12 +63,48 @@ def menu_selection
         exit
 end
 
+# Create a new game and allow gameboard logic to control flow
+def start_game
+    new_game = Gameboard.new
+    while new_game.game_live
+        new_game.make_move
+    end
+
+    # Game concluded - return to menu
+    welcome
+end
+
+# How to play instructions
+def instructions
+    system "clear"
+    puts "
+    ╔╗─╔╗─────────╔╗───────╔╗
+    ║║─║║────────╔╝╚╗──────║║
+    ║╚═╝╠══╦╗╔╗╔╗╚╗╔╬══╗╔══╣║╔══╦╗─╔╗
+    ║╔═╗║╔╗║╚╝╚╝║─║║║╔╗║║╔╗║║║╔╗║║─║║
+    ║║─║║╚╝╠╗╔╗╔╝─║╚╣╚╝║║╚╝║╚╣╔╗║╚═╝║
+    ╚╝─╚╩══╝╚╝╚╝──╚═╩══╝║╔═╩═╩╝╚╩═╗╔╝
+    ────────────────────║║──────╔═╝║
+    ────────────────────╚╝──────╚══╝"
+    puts "\n\n"
+    puts "Select a marker by typing into terminal"
+    puts "\nEnter y when ready to return to menu"
+    selection = ""
+    while selection != "y"
+        selection = gets.chomp.downcase
+    end
+    welcome
+end
+
+# Check win history
+def check_win_history
+    puts "This section is TO DO"
+end
+
 # Program logic
 
-system "clear"
 welcome
 
-puts "Made it to end"
 
 # Menu selection
 # 1. Start a new game
