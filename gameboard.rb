@@ -1,3 +1,7 @@
+require_relative "./black_marker"
+require_relative "./red_marker"
+require_relative "./king_marker"
+
 class Gameboard
     attr_reader :current_board, :red_markers, :black_markers, :current_turn, :game_live
 
@@ -28,13 +32,53 @@ class Gameboard
         @current_turn = "red"
         @game_live = true
 
-        # # Populate cell array
-        # self.populate_cell_array
+        # Populate cell array
+        self.populate_cell_array
 
-        # # Populate new board
-        # self.populate_new_board
+        # Populate new board
+        self.populate_new_board
 
         # # Update possible starting moves
         # self.update_possible_marker_moves
+    end
+
+    def populate_new_board
+        # Populate black markers
+        @current_board[:a1] = BlackMarker.new
+        @current_board[:c1] = BlackMarker.new
+        @current_board[:e1] = BlackMarker.new
+        @current_board[:g1] = BlackMarker.new
+        @current_board[:b2] = BlackMarker.new
+        @current_board[:d2] = BlackMarker.new
+        @current_board[:f2] = BlackMarker.new
+        @current_board[:h2] = BlackMarker.new
+        @current_board[:a3] = BlackMarker.new
+        @current_board[:c3] = BlackMarker.new
+        @current_board[:e3] = BlackMarker.new
+        @current_board[:g3] = BlackMarker.new
+
+        # Populate red markers
+        @current_board[:b6] = RedMarker.new
+        @current_board[:d6] = RedMarker.new
+        @current_board[:f6] = RedMarker.new
+        @current_board[:h6] = RedMarker.new
+        @current_board[:a7] = RedMarker.new
+        @current_board[:c7] = RedMarker.new
+        @current_board[:e7] = RedMarker.new
+        @current_board[:g7] = RedMarker.new
+        @current_board[:b8] = RedMarker.new
+        @current_board[:d8] = RedMarker.new
+        @current_board[:f8] = RedMarker.new
+        @current_board[:h8] = RedMarker.new
+
+        # Populate empty spots
+        @current_board[:b4] = nil
+        @current_board[:d4] = nil
+        @current_board[:f4] = nil
+        @current_board[:h4] = nil
+        @current_board[:a5] = nil
+        @current_board[:c5] = nil
+        @current_board[:e5] = nil
+        @current_board[:g5] = nil
     end
 end

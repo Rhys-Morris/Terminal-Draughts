@@ -75,6 +75,7 @@ describe 'Gameboard' do
     it "should be initialised with correctly positioned markers" do
         expect(@new_game.current_board[:a1].color).to eq "black"
         expect(@new_game.current_board[:h8].color).to eq "red"
+        expect(@new_game.current_board[:f4]).to be nil
     end
 
     it "should be initialised with a current_board hash" do
