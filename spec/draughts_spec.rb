@@ -61,5 +61,27 @@ end
 
 #Tests for Gameboard class
 describe 'Gameboard' do
-    
+
+    before(:each) do
+        @new_game = Gameboard.new
+    end
+
+
+    it "should be initialised with correct marker counts" do
+        expect(@new_game.black_markers).to be 12
+        expect(@new_game.red_markers).to be 12
+    end
+
+    it "should be initialised with correctly positioned markers" do
+        expect(@new_game.current_board[:a1].color).to eq "black"
+        expect(@new_game.current_board[:h8].color).to eq "red"
+    end
+
+    it "should be initialised with a current_board hash" do
+        expect(@new_game.current_board).to be_an_instance_of Hash
+    end
+
+    it "should be initialised with a current turn of red" do
+        expect(@new_game.current_turn).to eq "red"
+    end
 end
