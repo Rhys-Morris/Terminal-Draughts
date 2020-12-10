@@ -1,9 +1,10 @@
-# Handle command line arguments
 require "tty-progressbar"
+require "tty-prompt"
+require_relative './errors.rb'
 
+# Handle command line arguments
 
-
-# Helper functions
+# ----- HELPER FUNCTIONS -----
 
 # Welcome message
 def welcome 
@@ -13,7 +14,7 @@ def welcome
     # Progress bar
     bar = TTY::ProgressBar.new("Loading! [:bar]", total: 100)
     100.times do
-        sleep(0.05)
+        sleep(0.01)
         bar.advance(1)
     end
 
@@ -22,13 +23,43 @@ end
 
 # Make a selection at main menu
 def menu_selection
-    puts "Menu!"
+    prompt = TTY::Prompt.new
+
+    menu_selection = prompt.select("Select an option:") do |menu|
+        menu.choice "1. Start a new game", 1
+        menu.choice "2. How to play", 2
+        menu.choice "3. Display game history", 3
+        menu.choice "4. Exit program", 4
+    end
+
+    case menu_selection
+    when 1
+        puts "Pressed 1"
+    when 2
+        puts "Pressed 2"
+    when 3
+        puts "Pressed 3"
+    when 4
+        puts "Pressed 4"
+        exit
+    else
+        raise InvalidMenu
+    end
+
+    rescue InvalidMenu
+        puts "Invalid menu input. Please try again!"
+        retry
+    rescue
+        puts "An unexpected error occurred, the program will now exit"
+        exit
 end
 
 # Program logic
 
+system "clear"
 welcome
 
+puts "Made it to end"
 
 # Menu selection
 # 1. Start a new game
