@@ -30,7 +30,11 @@ end
 
 # Make a selection at main menu
 def main_menu
-    prompt = TTY::Prompt.new
+    prompt = TTY::Prompt.new(
+        active_color: :red,
+        symbols: {marker: "⮊"},
+        quiet: true
+    )
 
     puts ""
     menu_selection = prompt.select("Select an option:") do |menu|
