@@ -1,9 +1,10 @@
-require_relative "./black_marker"
+require_relative "./blue_marker"
 require_relative "./red_marker"
 require_relative "./king_marker"
+require "colorize"
 
 class Gameboard
-    attr_reader :current_board, :red_markers, :black_markers, :current_turn, :game_live
+    attr_reader :current_board, :red_markers, :blue_markers, :current_turn, :game_live
 
     ## Marker positions and rows
     @@row1 = [:a1, :b1, :c1, :d1, :e1, :f1, :g1, :h1]
@@ -28,7 +29,7 @@ class Gameboard
     def initialize
         @current_board = {}
         @red_markers = 12
-        @black_markers = 12
+        @blue_markers = 12
         @current_turn = "red"
         @game_live = true
 
@@ -44,18 +45,18 @@ class Gameboard
 
     def populate_new_board
         # Populate black markers
-        @current_board[:a1] = BlackMarker.new
-        @current_board[:c1] = BlackMarker.new
-        @current_board[:e1] = BlackMarker.new
-        @current_board[:g1] = BlackMarker.new
-        @current_board[:b2] = BlackMarker.new
-        @current_board[:d2] = BlackMarker.new
-        @current_board[:f2] = BlackMarker.new
-        @current_board[:h2] = BlackMarker.new
-        @current_board[:a3] = BlackMarker.new
-        @current_board[:c3] = BlackMarker.new
-        @current_board[:e3] = BlackMarker.new
-        @current_board[:g3] = BlackMarker.new
+        @current_board[:a1] = BlueMarker.new
+        @current_board[:c1] = BlueMarker.new
+        @current_board[:e1] = BlueMarker.new
+        @current_board[:g1] = BlueMarker.new
+        @current_board[:b2] = BlueMarker.new
+        @current_board[:d2] = BlueMarker.new
+        @current_board[:f2] = BlueMarker.new
+        @current_board[:h2] = BlueMarker.new
+        @current_board[:a3] = BlueMarker.new
+        @current_board[:c3] = BlueMarker.new
+        @current_board[:e3] = BlueMarker.new
+        @current_board[:g3] = BlueMarker.new
 
         # Populate red markers
         @current_board[:b6] = RedMarker.new
@@ -80,5 +81,38 @@ class Gameboard
         @current_board[:c5] = nil
         @current_board[:e5] = nil
         @current_board[:g5] = nil
+    end
+
+    def print_board
+        puts ""
+        puts "   A  B  C  D  E  F  G  H  "
+        puts ""
+        @@rows.each do |row|
+            # Print row number
+            print row[0][1] + " "
+
+            # Print each cell
+            row.each do |cell|
+                cell = cell.to_sym
+                board_position = @current_board[cell]
+                if board_position == nil
+                    print "   "
+                else
+                    if !@current_board[cell].king
+                        print @current_board[cell].color == "red" ?
+                        " O ".colorize(:red) :
+                        " O ".colorize(:blue)
+                    else
+                        print @current_board[cell].color == "red" ?
+                        " K ".colorize(:red) :
+                        " K ".colorize(:blue)
+                    end
+                end
+            end
+
+            # Space rows
+            puts ""
+            puts ""
+        end
     end
 end

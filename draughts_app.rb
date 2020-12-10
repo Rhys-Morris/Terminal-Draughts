@@ -1,6 +1,7 @@
 require "tty-progressbar"
 require "tty-prompt"
 require_relative './errors.rb'
+require_relative './gameboard.rb'
 
 # Handle command line arguments
 
@@ -9,7 +10,6 @@ require_relative './errors.rb'
 # Welcome message
 def welcome 
 
-    system "clear"
     puts "
     ██████╗░██████╗░░█████╗░██╗░░░██╗░██████╗░██╗░░██╗████████╗░██████╗
     ██╔══██╗██╔══██╗██╔══██╗██║░░░██║██╔════╝░██║░░██║╚══██╔══╝██╔════╝
@@ -70,9 +70,11 @@ end
 # Create a new game and allow gameboard logic to control flow
 def start_game
     new_game = Gameboard.new
-    while new_game.game_live
-        new_game.make_move
-    end
+    # while new_game.game_live
+    #     new_game.make_move
+    # end
+
+    new_game.print_board
 
     # Game concluded - return to menu
     welcome

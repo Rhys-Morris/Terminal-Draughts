@@ -1,8 +1,8 @@
 require_relative('./marker.rb')
 
-class BlackMarker < Marker
+class BlueMarker < Marker
     def initialize
-        super("black")
+        super("blue")
     end
 
 end
