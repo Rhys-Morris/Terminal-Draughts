@@ -46,41 +46,41 @@ class Gameboard
 
     def populate_new_board
         # Populate blue markers
-        @current_board[:a1] = BlueMarker.new
-        @current_board[:c1] = BlueMarker.new
-        @current_board[:e1] = BlueMarker.new
-        @current_board[:g1] = BlueMarker.new
+        @current_board[:a1] = nil
+        @current_board[:c1] = nil
+        @current_board[:e1] = nil
+        @current_board[:g1] = nil
         @current_board[:b2] = BlueMarker.new
         @current_board[:d2] = BlueMarker.new
         @current_board[:f2] = BlueMarker.new
-        @current_board[:h2] = BlueMarker.new
-        @current_board[:a3] = BlueMarker.new
-        @current_board[:c3] = BlueMarker.new
-        @current_board[:e3] = BlueMarker.new
-        @current_board[:g3] = BlueMarker.new
+        @current_board[:h2] = nil
+        @current_board[:a3] = nil
+        @current_board[:c3] = nil
+        @current_board[:e3] = nil
+        @current_board[:g3] = nil
 
         # Populate red markers
-        @current_board[:b6] = RedMarker.new
-        @current_board[:d6] = RedMarker.new
-        @current_board[:f6] = RedMarker.new
-        @current_board[:h6] = RedMarker.new
-        @current_board[:a7] = RedMarker.new
-        @current_board[:c7] = RedMarker.new
-        @current_board[:e7] = RedMarker.new
-        @current_board[:g7] = RedMarker.new
-        @current_board[:b8] = RedMarker.new
-        @current_board[:d8] = RedMarker.new
-        @current_board[:f8] = RedMarker.new
-        @current_board[:h8] = RedMarker.new
+        @current_board[:b6] = nil
+        @current_board[:d6] = nil
+        @current_board[:f6] = nil
+        @current_board[:h6] = nil
+        @current_board[:a7] = nil
+        @current_board[:c7] = nil
+        @current_board[:e7] = nil
+        @current_board[:g7] = nil
+        @current_board[:b8] = nil
+        @current_board[:d8] = nil
+        @current_board[:f8] = nil
+        @current_board[:h8] = nil
 
         # Populate empty spots
         @current_board[:b4] = nil
-        @current_board[:d4] = nil
-        @current_board[:f4] = nil
+        @current_board[:d4] = BlueMarker.new
+        @current_board[:f4] = KingMarker.new("blue")
         @current_board[:h4] = nil
         @current_board[:a5] = nil
         @current_board[:c5] = nil
-        @current_board[:e5] = nil
+        @current_board[:e5] = KingMarker.new("red")
         @current_board[:g5] = nil
     end
 
@@ -195,9 +195,11 @@ class Gameboard
     # Iterate over all cells to find where markers are positioned
     # Call update_valid_moves to populate possible moves on each marker
     def update_possible_marker_moves
+        # Pass in duplicate of current_state to prevent overwriting
+        current_state = @current_board.dup
         @@cells.each do |cell|
             if @current_board[cell]
-                @current_board[cell].update_valid_moves(@@rows, @current_board, cell)
+                @current_board[cell].update_valid_moves(@@rows, current_state, cell)
             end
         end
     end

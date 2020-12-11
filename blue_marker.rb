@@ -108,7 +108,7 @@ class BlueMarker < Marker
                 if jump_cell_index <= 7 then jump_cell = jump_row[jump_cell_index] end
                 if jump_cell && !current_state[jump_cell]
                     @valid_moves << jump_cell
-                    jump_copy = jumps.dup
+                    jumps_copy = jumps.dup
                     jumps_copy << diagonal_left_cell
                     @jump_moves[jump_cell] = jumps_copy
                     self.check_additional_jump(board, current_state, jump_cell, jumps_copy)

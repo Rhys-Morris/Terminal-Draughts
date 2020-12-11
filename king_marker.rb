@@ -11,7 +11,7 @@ class KingMarker < Marker
     end
 
     def update_valid_moves(board, current_state, current_position)
-
+        
         opposite_color = @color == "red" ? "blue" : "red"
 
         # Reset moves
@@ -66,6 +66,9 @@ class KingMarker < Marker
             @valid_moves << below_right
         end
 
+        # Remove marker from current position on gameboard, so spot can be returned to if possible
+        current_state[current_position] = nil
+
         # Check for jumps in surrounding cells
         if above_left && current_state[above_left]
             if current_state[above_left].color == opposite_color
@@ -79,6 +82,9 @@ class KingMarker < Marker
                     if !current_state[jump_cell]
                         @valid_moves << jump_cell
                         @jump_moves[jump_cell] = [above_left]
+                        # Remove jumped cell from current state board
+                        current_state[above_left] = nil
+                        self.check_additional_jump(board, current_state, jump_cell, [above_left], current_position)
                     end
                 end
             end
@@ -96,6 +102,9 @@ class KingMarker < Marker
                     if !current_state[jump_cell]
                         @valid_moves << jump_cell
                         @jump_moves[jump_cell] = [above_right]
+                        # Remove jumped cell from current state board
+                        current_state[above_right] = nil
+                        self.check_additional_jump(board, current_state, jump_cell, [above_right], current_position)
                     end
                 end
             end
@@ -113,6 +122,9 @@ class KingMarker < Marker
                     if !current_state[jump_cell]
                         @valid_moves << jump_cell
                         @jump_moves[jump_cell] = [below_left]
+                        # Remove jumped cell from current state board
+                        current_state[below_left] = nil
+                        self.check_additional_jump(board, current_state, jump_cell, [below_left], current_position)
                     end
                 end
             end
@@ -130,57 +142,127 @@ class KingMarker < Marker
                     if !current_state[jump_cell]
                         @valid_moves << jump_cell
                         @jump_moves[jump_cell] = [below_right]
+                        # Remove jumped cell from current state board
+                        current_state[below_right] = nil
+                        self.check_additional_jump(board, current_state, jump_cell, [below_right], current_position)
                     end
                 end
             end
         end
+
+        # Debugging
+        pp @valid_moves
+        puts @jump_moves
+        pp current_state
     end
 
-    def check_additional_jump(board, current_state, current_position, jumps)
+    def check_additional_jump(board, current_state, current_position, jumps, previous_position)
         
+        opposite_color = @color == "red" ? "blue" : "red"                           # Fix this up so it's an instance variable at some point
+
         # Get current row and cell index
         current_row_index = current_position[1].to_i - 1
         cell_index = board[current_row_index].find_index current_position
         
-        # Get diagonal cell and next row indexes
-        diagonal_left_index = cell_index + 1
-        diagonal_right_index = cell_index - 1
-        next_row_index = current_row_index + 1
+        # Get diagonal cell and above and below row indexes
+        left_index = cell_index - 1
+        right_index = cell_index + 1
+        below_row_index = current_row_index + 1
+        above_row_index = current_row_index - 1
 
-        # Get next row and diagonal cells
-        if next_row_index <= 6 then next_row = board[next_row_index] end
-        if next_row && diagonal_left_index <= 6 then diagonal_left_cell = next_row[diagonal_left_index] end
-        if next_row && diagonal_right_index >= 1 then diagonal_right_cell = next_row[diagonal_right_index] end
+        # Get below row and diagonal cells
+        if below_row_index <= 6 then below_row = board[below_row_index] end
+        if below_row && left_index >= 1 then below_left_cell = below_row[left_index] end
+        if below_row && right_index <= 6 then below_right_cell = below_row[right_index] end
+
+        # Get above row and diagonal cells
+        if above_row_index <= 6 then above_row = board[above_row_index] end
+        if above_row && left_index >= 1 then above_left_cell = above_row[left_index] end
+        if above_row && right_index <= 6 then above_right_cell = above_row[right_index] end
         
-        # Check if diagonal cells contain an opposite color marker
-        if diagonal_right_cell && current_state[diagonal_right_cell]
-            if current_state[diagonal_right_cell].color == "red"
-                jump_row_index = next_row_index + 1
-                jump_cell_index = diagonal_right_index - 1
+        # Check if below cells contain an opposite color marker that can be jumped
+        if below_right_cell && current_state[below_right_cell]
+            if current_state[below_right_cell].color == opposite_color
+                jump_row_index = below_row_index + 1
+                jump_cell_index = right_index + 1
                 if jump_row_index <= 7 then jump_row = board[jump_row_index] end
-                if jump_cell_index >= 0 then jump_cell = jump_row[jump_cell_index] end
-                if jump_cell && !current_state[jump_cell]
-                    @valid_moves << jump_cell
-                    jumps_copy = jumps.dup
-                    jumps_copy << diagonal_right_cell
-                    @jump_moves[jump_cell] = jumps_copy
-                    self.check_additional_jump(board, current_state, jump_cell, jumps_copy)
+                if jump_cell_index <= 7 then jump_cell = jump_row[jump_cell_index] end
+                # Prevent moving backwards and infinite loop
+                unless jump_cell == previous_position
+                    if jump_cell && !current_state[jump_cell]
+                        @valid_moves << jump_cell
+                        jumps_copy = jumps.dup
+                        puts current_position
+                        jumps_copy << below_right_cell
+                        @jump_moves[jump_cell] = jumps_copy
+                        # Remove jumped cell from current state board
+                        current_state[below_right_cell] = nil
+                        self.check_additional_jump(board, current_state, jump_cell, jumps_copy, current_position)
+                    end
                 end
             end
         end
 
-        if diagonal_left_cell && current_state[diagonal_left_cell]
-            if current_state[diagonal_left_cell].color == "red"
-                jump_row_index = next_row_index + 1
-                jump_cell_index = diagonal_left_index + 1
+        if below_left_cell && current_state[below_left_cell]
+            if current_state[below_left_cell].color == opposite_color
+                jump_row_index = below_row_index + 1
+                jump_cell_index = left_index - 1
                 if jump_row_index <= 7 then jump_row = board[jump_row_index] end
+                if jump_cell_index >= 0 then jump_cell = jump_row[jump_cell_index] end
+                # Prevent moving backwards and infinite loop
+                unless jump_cell == previous_position
+                    if jump_cell && !current_state[jump_cell]
+                        @valid_moves << jump_cell
+                        jumps_copy = jumps.dup
+                        jumps_copy << below_left_cell
+                        @jump_moves[jump_cell] = jumps_copy
+                        # Remove jumped cell from current state board
+                        current_state[below_left_cell] = nil
+                        self.check_additional_jump(board, current_state, jump_cell, jumps_copy, current_position)
+                    end
+                end
+            end
+        end
+
+        # Check if above cells contain an opposite color marker that can be jumped
+        if above_right_cell && current_state[above_right_cell]
+            if current_state[above_right_cell].color == opposite_color
+                jump_row_index = above_row_index - 1
+                jump_cell_index = right_index + 1
+                if jump_row_index >= 0 then jump_row = board[jump_row_index] end
                 if jump_cell_index <= 7 then jump_cell = jump_row[jump_cell_index] end
-                if jump_cell && !current_state[jump_cell]
-                    @valid_moves << jump_cell
-                    jump_copy = jumps.dup
-                    jumps_copy << diagonal_left_cell
-                    @jump_moves[jump_cell] = jumps_copy
-                    self.check_additional_jump(board, current_state, jump_cell, jumps_copy)
+                # Prevent moving backwards and infinite loop
+                unless jump_cell == previous_position
+                    if jump_cell && !current_state[jump_cell]
+                        @valid_moves << jump_cell
+                        jumps_copy = jumps.dup
+                        jumps_copy << above_right_cell
+                        @jump_moves[jump_cell] = jumps_copy
+                        # Remove jumped cell from current state board
+                        current_state[above_right_cell] = nil
+                        self.check_additional_jump(board, current_state, jump_cell, jumps_copy, current_position)
+                    end
+                end
+            end
+        end
+
+        if above_left_cell && current_state[above_left_cell]
+            if current_state[above_left_cell].color == opposite_color
+                jump_row_index = above_row_index - 1
+                jump_cell_index = left_index - 1
+                if jump_row_index >= 0 then jump_row = board[jump_row_index] end
+                if jump_cell_index >= 0 then jump_cell = jump_row[jump_cell_index] end
+                # Prevent moving backwards and infinite loop
+                unless jump_cell == previous_position
+                    if jump_cell && !current_state[jump_cell]
+                        @valid_moves << jump_cell
+                        jumps_copy = jumps.dup
+                        jumps_copy << above_left_cell
+                        @jump_moves[jump_cell] = jumps_copy
+                        # Remove jumped cell from current state board
+                        current_state[above_left_cell] = nil
+                        self.check_additional_jump(board, current_state, jump_cell, jumps_copy, current_position)
+                    end
                 end
             end
         end
