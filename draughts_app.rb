@@ -63,9 +63,9 @@ def main_menu
     rescue InvalidMenu
         puts "Invalid menu input. Please try again!"
         retry
-    rescue
-        puts "An unexpected error occurred, the program will now exit"
-        exit
+    # rescue
+    #     puts "An unexpected error occurred, the program will now exit"
+    #     exit
 end
 
 # Create a new game and allow gameboard logic to control flow
