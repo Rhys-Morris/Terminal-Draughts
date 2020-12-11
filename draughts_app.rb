@@ -128,6 +128,8 @@ end
 
 def command_line_info
     puts "\nCommand line arguments:\n\n"
+    puts "This program will accept a single command line argument on launch. Arguments can be passed to draughts_app.rb directly or to draughts.sh\n"
+    puts "Example: draughts.sh --help\n\n"
     puts "-h or --help      Display all command line arguments"
     puts "-i or --info      Display instructions on how to play"
     puts "start             Skip menu and immediately start a new game"
