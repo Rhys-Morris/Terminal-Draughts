@@ -4,8 +4,6 @@ require "colorize"
 require_relative './errors.rb'
 require_relative './gameboard.rb'
 
-# ----- HANDLE COMMAND LINE ARGUMENTS -----
-
 # ----- HELPER FUNCTIONS -----
 
 # Welcome message
@@ -73,12 +71,9 @@ end
 def start_game
     new_game = Gameboard.new
 
-    new_game.winner = "red"
-    new_game.update_win_history
-
-    # while new_game.game_live
-    #     new_game.make_move
-    # end
+    while new_game.game_live
+        new_game.make_move
+    end
 
     # Prompt to return to main menu
     puts "\nEnter y when ready to return to menu"
@@ -118,8 +113,55 @@ def check_win_history
         end
     end
     win_history.close
+
+    puts "\nEnter y when ready to return to menu"
+    selection = ""
+    while selection != "y"
+        selection = gets.chomp.downcase
+    end
+    welcome
 end
 
-# Initialise program flow
+# ----- INITIALISE -----
+
+# ----- HANDLE COMMAND LINE ARGUMENTS -----
+
+def command_line_info
+    puts "\nCommand line arguments:\n\n"
+    puts "-h or --help      Display all command line arguments"
+    puts "-i or --info      Display instructions on how to play"
+    puts "start             Skip menu and immediately start a new game"
+    puts "wins              Print win counts"
+    puts ""
+end
+
+def handle_flags
+    case ARGV[0]
+    when "-h"
+        command_line_info
+        exit
+    when "--help"
+        command_line_info
+        exit
+    when "-i"
+        ARGV.clear
+        instructions
+    when "--info"
+        ARGV.clear
+        instructions
+    when "start"
+        ARGV.clear
+        start_game
+    when "wins"
+        ARGV.clear
+        check_win_history
+    end
+end
+
+if ARGV.length != 0
+    handle_flags
+end
+
+# Default program start
 welcome
 

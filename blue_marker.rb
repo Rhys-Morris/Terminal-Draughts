@@ -31,7 +31,7 @@ class BlueMarker < Marker
         elsif diagonal_right_cell && current_state[diagonal_right_cell].color == "red"
             jump_index = diagonal_right_cell_index - 1
             jump_row = board[current_row + 2]   # Improve logic flow here
-            unless jump_index < 0 then jump_cell = jump_row[jump_index] end
+            unless jump_index > 7 then jump_cell = jump_row[jump_index] end
             if jump_cell && !current_state[jump_cell]
                 @valid_moves << jump_cell
                 @jump_moves[jump_cell] = [diagonal_right_cell]
