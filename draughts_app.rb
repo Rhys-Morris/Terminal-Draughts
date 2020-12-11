@@ -1,5 +1,6 @@
 require "tty-progressbar"
 require "tty-prompt"
+require "colorize"
 require_relative './errors.rb'
 require_relative './gameboard.rb'
 
@@ -100,10 +101,19 @@ end
 
 # Check win history
 def check_win_history
-    # Open file that is storing previous game data
-    # Print data to screen
-    # Close file
-    # Return to menu
+    win_history = File.open("./game_history/win_history.txt")
+    win_history.readlines.each_with_index do |line, index|
+        if index == 2
+            split_line = line.strip.split(' ')
+            puts "#{split_line[0].colorize(:blue)}: #{split_line[1].to_i}"
+        elsif index == 3
+            split_line = line.strip.split(' ')
+            puts "#{split_line[0].colorize(:red)}: #{split_line[1].to_i}"
+        else 
+            puts line
+        end
+    end
+    win_history.close
 end
 
 # Initialise program flow

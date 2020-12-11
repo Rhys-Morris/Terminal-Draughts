@@ -1,0 +1,6 @@
+Win Counts
+
+Blue: 23
+Red: 54
+
+This should not be printed
