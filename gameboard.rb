@@ -75,7 +75,7 @@ class Gameboard
 
         # Populate empty spots
         @current_board[:b4] = nil
-        @current_board[:d4] = BlueMarker.new
+        @current_board[:d4] = KingMarker.new("blue")
         @current_board[:f4] = KingMarker.new("blue")
         @current_board[:h4] = nil
         @current_board[:a5] = nil
@@ -197,8 +197,9 @@ class Gameboard
     def update_possible_marker_moves
         # Pass in duplicate of current_state to prevent overwriting
         current_state = @current_board.dup
-        @@cells.each do |cell|
+        @@cells.each_with_index do |cell, index|
             if @current_board[cell]
+                # puts "Calling a cell update with this gameboard: #{current_state} this pass #{index}"
                 @current_board[cell].update_valid_moves(@@rows, current_state, cell)
             end
         end

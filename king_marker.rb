@@ -66,8 +66,10 @@ class KingMarker < Marker
             @valid_moves << below_right
         end
 
-        # Remove marker from current position on gameboard, so spot can be returned to if possible
-        current_state[current_position] = nil
+        # Create new current_state to modify to prevent modification of original board
+        current_state_new = current_state.dup
+        # Remove marker from this position to facilitate possible return
+        current_state_new[current_position] = nil
 
         # Check for jumps in surrounding cells
         if above_left && current_state[above_left]
@@ -83,8 +85,8 @@ class KingMarker < Marker
                         @valid_moves << jump_cell
                         @jump_moves[jump_cell] = [above_left]
                         # Remove jumped cell from current state board
-                        current_state[above_left] = nil
-                        self.check_additional_jump(board, current_state, jump_cell, [above_left], current_position)
+                        current_state_new[above_left] = nil
+                        self.check_additional_jump(board, current_state_new, jump_cell, [above_left], current_position)
                     end
                 end
             end
@@ -103,8 +105,8 @@ class KingMarker < Marker
                         @valid_moves << jump_cell
                         @jump_moves[jump_cell] = [above_right]
                         # Remove jumped cell from current state board
-                        current_state[above_right] = nil
-                        self.check_additional_jump(board, current_state, jump_cell, [above_right], current_position)
+                        current_state_new[above_left] = nil
+                        self.check_additional_jump(board, current_state_new, jump_cell, [above_right], current_position)
                     end
                 end
             end
@@ -123,8 +125,8 @@ class KingMarker < Marker
                         @valid_moves << jump_cell
                         @jump_moves[jump_cell] = [below_left]
                         # Remove jumped cell from current state board
-                        current_state[below_left] = nil
-                        self.check_additional_jump(board, current_state, jump_cell, [below_left], current_position)
+                        current_state_new[above_left] = nil
+                        self.check_additional_jump(board, current_state_new, jump_cell, [below_left], current_position)
                     end
                 end
             end
@@ -143,8 +145,8 @@ class KingMarker < Marker
                         @valid_moves << jump_cell
                         @jump_moves[jump_cell] = [below_right]
                         # Remove jumped cell from current state board
-                        current_state[below_right] = nil
-                        self.check_additional_jump(board, current_state, jump_cell, [below_right], current_position)
+                        current_state_new[above_left] = nil
+                        self.check_additional_jump(board, current_state_new, jump_cell, [below_right], current_position)
                     end
                 end
             end
@@ -153,12 +155,12 @@ class KingMarker < Marker
         # Debugging
         pp @valid_moves
         puts @jump_moves
-        pp current_state
+        # pp current_state
     end
 
     def check_additional_jump(board, current_state, current_position, jumps, previous_position)
         
-        opposite_color = @color == "red" ? "blue" : "red"                           # Fix this up so it's an instance variable at some point
+        opposite_color = @color == "red" ? "blue" : "red"                           
 
         # Get current row and cell index
         current_row_index = current_position[1].to_i - 1
@@ -179,6 +181,9 @@ class KingMarker < Marker
         if above_row_index <= 6 then above_row = board[above_row_index] end
         if above_row && left_index >= 1 then above_left_cell = above_row[left_index] end
         if above_row && right_index <= 6 then above_right_cell = above_row[right_index] end
+
+        # Create new current_state to modify to prevent modification of original board
+        current_state_new = current_state.dup
         
         # Check if below cells contain an opposite color marker that can be jumped
         if below_right_cell && current_state[below_right_cell]
@@ -196,8 +201,8 @@ class KingMarker < Marker
                         jumps_copy << below_right_cell
                         @jump_moves[jump_cell] = jumps_copy
                         # Remove jumped cell from current state board
-                        current_state[below_right_cell] = nil
-                        self.check_additional_jump(board, current_state, jump_cell, jumps_copy, current_position)
+                        current_state_new[below_right_cell] = nil
+                        self.check_additional_jump(board, current_state_new, jump_cell, jumps_copy, current_position)
                     end
                 end
             end
@@ -217,8 +222,8 @@ class KingMarker < Marker
                         jumps_copy << below_left_cell
                         @jump_moves[jump_cell] = jumps_copy
                         # Remove jumped cell from current state board
-                        current_state[below_left_cell] = nil
-                        self.check_additional_jump(board, current_state, jump_cell, jumps_copy, current_position)
+                        current_state_new[below_left_cell] = nil
+                        self.check_additional_jump(board, current_state_new, jump_cell, jumps_copy, current_position)
                     end
                 end
             end
@@ -239,8 +244,8 @@ class KingMarker < Marker
                         jumps_copy << above_right_cell
                         @jump_moves[jump_cell] = jumps_copy
                         # Remove jumped cell from current state board
-                        current_state[above_right_cell] = nil
-                        self.check_additional_jump(board, current_state, jump_cell, jumps_copy, current_position)
+                        current_state_new[above_right_cell] = nil
+                        self.check_additional_jump(board, current_state_new, jump_cell, jumps_copy, current_position)
                     end
                 end
             end
@@ -260,8 +265,8 @@ class KingMarker < Marker
                         jumps_copy << above_left_cell
                         @jump_moves[jump_cell] = jumps_copy
                         # Remove jumped cell from current state board
-                        current_state[above_left_cell] = nil
-                        self.check_additional_jump(board, current_state, jump_cell, jumps_copy, current_position)
+                        current_state_new[above_left_cell] = nil
+                        self.check_additional_jump(board, current_state_new, jump_cell, jumps_copy, current_position)
                     end
                 end
             end
