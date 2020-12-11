@@ -1,7 +1,7 @@
 require_relative "../gameboard.rb"
 require_relative "../marker.rb"
 require_relative "../red_marker.rb"
-require_relative "../black_marker.rb"
+require_relative "../blue_marker.rb"
 require_relative "../king_marker.rb"
 
 # Tests for Marker class
@@ -12,9 +12,9 @@ describe 'Marker' do
         expect(red_marker.color).to eq("red")
     end
 
-    it "should have a color property of black when black passed as instantiation argument" do
-        black_marker = Marker.new("black")
-        expect(black_marker.color).to eq("black")
+    it "should have a color property of blue when blue passed as instantiation argument" do
+        blue_marker = Marker.new("blue")
+        expect(blue_marker.color).to eq("blue")
     end
 
     it "should be instantiated with an empty valid_moves array" do
@@ -45,12 +45,12 @@ describe 'RedMarker' do
     end
 end
 
-# Tests for BlackMarker class
-describe 'BlackMarker' do
+# Tests for BlueMarker class
+describe 'BlueMarker' do
 
-    it "should have a color property of black" do
-        black_marker = BlackMarker.new
-        expect(black_marker.color).to eq("black")
+    it "should have a color property of blue" do
+        blue_marker = BlueMarker.new
+        expect(blue_marker.color).to eq("blue")
     end
 end
 
@@ -68,12 +68,12 @@ describe 'Gameboard' do
 
 
     it "should be initialised with correct marker counts" do
-        expect(@new_game.black_markers).to be 12
+        expect(@new_game.blue_markers).to be 12
         expect(@new_game.red_markers).to be 12
     end
 
     it "should be initialised with correctly positioned markers" do
-        expect(@new_game.current_board[:a1].color).to eq "black"
+        expect(@new_game.current_board[:a1].color).to eq "blue"
         expect(@new_game.current_board[:h8].color).to eq "red"
         expect(@new_game.current_board[:f4]).to be nil
     end
@@ -84,5 +84,63 @@ describe 'Gameboard' do
 
     it "should be initialised with a current turn of red" do
         expect(@new_game.current_turn).to eq "red"
+    end
+
+    # Decrement marker count method
+    describe "decrement_marker_count" do
+        it "should decrement marker count by 1 when called" do
+            @new_game.decrement_marker_count('blue')
+            @new_game.decrement_marker_count('red')
+            expect(@new_game.blue_markers).to be 11
+            expect(@new_game.red_markers).to be 11
+        end
+    end
+
+    # Check win method
+    describe "check_win" do
+        it "should be false when first initiated" do
+            expect(@new_game.check_win).to be false
+        end
+
+        it "should be true when marker count is 0" do
+            12.times do
+                @new_game.decrement_marker_count("red")
+            end
+            expect(@new_game.red_markers).to be 0
+            expect(@new_game.check_win).to be true
+        end
+    end
+
+    # Print winner
+    describe "print_winner" do
+        it "should print blue when red_markers is 0" do
+            12.times do
+                @new_game.decrement_marker_count("red")
+            end
+            expect(@new_game.red_markers).to be 0
+            expect(@new_game.print_winner).to eq "\nBlue is the winner!"
+        end
+
+        it "should print red when blue_markers is 0" do
+            12.times do
+                @new_game.decrement_marker_count("blue")
+            end
+            expect(@new_game.blue_markers).to be 0
+            expect(@new_game.print_winner).to eq "\nRed is the winner!"
+        end
+    end
+
+    # Update Turn
+    describe "update_turn" do
+        it "current turn should be blue after first update" do
+            @new_game.update_turn
+            expect(@new_game.current_turn).to eq "blue"
+        end
+
+        it "current turn should be red after called twice" do
+            @new_game.update_turn
+            @new_game.update_turn
+            expect(@new_game.current_turn).to eq "red"
+        end
     end
 end

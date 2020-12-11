@@ -53,5 +53,6 @@ class RedMarker < Marker
                 @jump_moves[jump_cell] = [diagonal_left_cell]
             end
         end
+    end
 
 end

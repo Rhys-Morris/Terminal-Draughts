@@ -125,7 +125,7 @@ class Gameboard
     def print_winner
         if @blue_markers == 0
             "\nRed is the winner!"
-        else
+        elsif @red_markers == 0
             "\nBlue is the winner!"
         end
     end
