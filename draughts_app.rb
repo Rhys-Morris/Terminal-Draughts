@@ -72,9 +72,13 @@ end
 # Create a new game and allow gameboard logic to control flow
 def start_game
     new_game = Gameboard.new
-    while new_game.game_live
-        new_game.make_move
-    end
+
+    new_game.winner = "red"
+    new_game.update_win_history
+
+    # while new_game.game_live
+    #     new_game.make_move
+    # end
 
     # Prompt to return to main menu
     puts "\nEnter y when ready to return to menu"
@@ -101,7 +105,7 @@ end
 
 # Check win history
 def check_win_history
-    win_history = File.open("./game_history/win_history.txt")
+    win_history = File.open("./game_history/win_counts.txt")
     win_history.readlines.each_with_index do |line, index|
         if index == 2
             split_line = line.strip.split(' ')

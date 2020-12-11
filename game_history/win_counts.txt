@@ -1,0 +1,4 @@
+Win Counts
+
+Blue: 0
+Red: 0

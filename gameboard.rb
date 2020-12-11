@@ -4,7 +4,7 @@ require_relative "./king_marker"
 require "colorize"
 
 class Gameboard
-    attr_reader :current_board, :red_markers, :blue_markers, :current_turn, :game_live
+    attr_reader :current_board, :red_markers, :blue_markers, :current_turn, :game_live, :winner
 
     ## Marker positions and rows
     @@row1 = [:a1, :b1, :c1, :d1, :e1, :f1, :g1, :h1]
@@ -32,6 +32,7 @@ class Gameboard
         @blue_markers = 12
         @current_turn = "red"
         @game_live = true
+        @winner = nil
 
         # Populate cell array
         self.populate_cell_array
@@ -125,13 +126,46 @@ class Gameboard
     def print_winner
         if @blue_markers == 0
             "\nRed is the winner!"
+            @winner = "red"
         elsif @red_markers == 0
             "\nBlue is the winner!"
+            @winner = "blue"
         end
     end
     
     def handle_game_over
         @game_live = false
+        self.update_win_history
+    end
+
+    def update_win_history
+        f = File.open("./game_history/win_counts.txt", "r")
+        blue_wins = ""
+        red_wins = ""
+        f.readlines.each_with_index do |line, index|
+            if index == 2
+                blue_wins = line
+            elsif index == 3
+                red_wins = line
+            end
+        end
+        f.close
+        blue_win_count = blue_wins.split(' ')[1].to_i
+        red_win_count = red_wins.split(' ')[1].to_i
+        f = File.open("./game_history/win_counts.txt", "w")
+        f.write("Win Counts")
+        f.write("\n\n")
+        if @winner == "blue"
+            f.write("Blue: #{blue_win_count + 1}")
+        else
+            f.write(blue_wins)
+        end
+        if @winner == "red"
+            f.write("Red: #{red_win_count + 1}")
+        else
+            f.write(red_wins)
+        end
+        f.close
     end
     
     # Print current turn

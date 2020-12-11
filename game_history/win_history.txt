@@ -1,6 +1,0 @@
-Win Counts
-
-Blue: 0
-Red: 0
-
-Game History:
