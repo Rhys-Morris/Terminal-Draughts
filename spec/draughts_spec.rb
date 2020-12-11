@@ -1,8 +1,8 @@
-require_relative "../gameboard.rb"
-require_relative "../marker.rb"
-require_relative "../red_marker.rb"
-require_relative "../blue_marker.rb"
-require_relative "../king_marker.rb"
+require_relative "../gameboard"
+require_relative "../marker"
+require_relative "../red_marker"
+require_relative "../blue_marker"
+require_relative "../king_marker"
 
 # Tests for Marker class
 describe 'Marker' do
@@ -56,7 +56,12 @@ end
 
 #Tests for KingMarker classes
 describe 'KingMarker' do
-    
+    it "should return an instance of KingMarker when called" do
+        red_king = KingMarker.new('red')
+        expect(red_king.king).to be true
+        expect(red_king.color).to eq "red"
+        expect(red_king).to be_an_instance_of KingMarker
+    end
 end
 
 #Tests for Gameboard class
