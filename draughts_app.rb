@@ -10,6 +10,7 @@ require_relative './gameboard.rb'
 # Welcome message
 def welcome 
 
+    system "clear"
     puts "
     ██████╗░██████╗░░█████╗░██╗░░░██╗░██████╗░██╗░░██╗████████╗░██████╗
     ██╔══██╗██╔══██╗██╔══██╗██║░░░██║██╔════╝░██║░░██║╚══██╔══╝██╔════╝
@@ -19,7 +20,7 @@ def welcome
     ╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝░░╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░\n\n\n"
 
     # Progress bar
-    bar = TTY::ProgressBar.new("[:bar]", total: 100)
+    bar = TTY::ProgressBar.new("[:bar]", total: 80)
     100.times do
         sleep(0.01)
         bar.advance(1)
@@ -75,6 +76,13 @@ def start_game
     # end
 
     new_game.print_board
+
+    puts "\nEnter y when ready to return to menu"
+    selection = ""
+    while selection != "y"
+        selection = gets.chomp.downcase
+    end
+    welcome
 
     # Game concluded - return to menu
     welcome
