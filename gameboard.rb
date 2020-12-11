@@ -55,7 +55,7 @@ class Gameboard
         @current_board[:h2] = BlueMarker.new
         @current_board[:a3] = BlueMarker.new
         @current_board[:c3] = BlueMarker.new
-        @current_board[:e3] = BlueMarker.new
+        @current_board[:e3] = nil
         @current_board[:g3] = BlueMarker.new
 
         # Populate red markers
@@ -75,12 +75,12 @@ class Gameboard
         # Populate empty spots
         @current_board[:b4] = nil
         @current_board[:d4] = nil
-        @current_board[:f4] = nil
+        @current_board[:f4] = RedMarker.new
         @current_board[:h4] = nil
         @current_board[:a5] = nil
         @current_board[:c5] = nil
         @current_board[:e5] = nil
-        @current_board[:g5] = KingMarker.new("red")
+        @current_board[:g5] = KingMarker.new("blue")
     end
 
     def print_board

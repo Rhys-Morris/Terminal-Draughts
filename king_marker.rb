@@ -12,6 +12,8 @@ class KingMarker < Marker
 
     def update_valid_moves(board, current_state, current_position)
 
+        opposite_color = @color == "red" ? "blue" : "red"
+
         # Reset moves
         @valid_moves = []
         @jump_moves = {}
@@ -65,10 +67,80 @@ class KingMarker < Marker
         end
 
         # Check if cell has opposite colour and can be jumped
+        if above_left && current_state[above_left]
+            if current_state[above_left].color == opposite_color
+                jump_row_index = row_above_index - 1
+                jump_row = jump_row_index >= 0 ? board[jump_row_index] : nil
+                jump_cell_index = left_index - 1
+                unless !jump_row
+                    jump_cell = jump_cell_index >= 0 ? jump_row[jump_cell_index] : nil
+                end
+                unless !jump_cell
+                    if !current_state[jump_cell]
+                        @valid_moves << jump_cell
+                        @jump_moves[jump_cell] = [above_left]
+                    end
+                end
+            end
+        end
+
+        if above_right && current_state[above_right]
+            if current_state[above_right].color == opposite_color
+                jump_row_index = row_above_index - 1
+                jump_row = jump_row_index >= 0 ? board[jump_row_index] : nil
+                jump_cell_index = right_index + 1
+                unless !jump_row
+                    jump_cell = jump_cell_index <= 7 ? jump_row[jump_cell_index] : nil
+                end
+                unless !jump_cell
+                    if !current_state[jump_cell]
+                        @valid_moves << jump_cell
+                        @jump_moves[jump_cell] = [above_right]
+                    end
+                end
+            end
+        end
+
+        if below_left && current_state[below_left]
+            if current_state[below_left].color == opposite_color
+                jump_row_index = row_below_index + 1
+                jump_row = jump_row_index <= 7 ? board[jump_row_index] : nil
+                jump_cell_index = left_index - 1
+                unless !jump_row
+                    jump_cell = jump_cell_index >= 0 ? jump_row[jump_cell_index] : nil
+                end
+                unless !jump_cell
+                    if !current_state[jump_cell]
+                        @valid_moves << jump_cell
+                        @jump_moves[jump_cell] = [below_left]
+                    end
+                end
+            end
+        end
+
+        if below_right && current_state[below_right]
+            if current_state[below_right].color == opposite_color
+                jump_row_index = row_below_index + 1
+                jump_row = jump_row_index <= 7 ? board[jump_row_index] : nil
+                jump_cell_index = right_index + 1
+                unless !jump_row
+                    jump_cell = jump_cell_index <= 7 ? jump_row[jump_cell_index] : nil
+                end
+                unless !jump_cell
+                    if !current_state[jump_cell]
+                        @valid_moves << jump_cell
+                        @jump_moves[jump_cell] = [below_right]
+                    end
+                end
+            end
+        end
 
         puts "King marker at #{current_position} cells surrounding"
         p [above_left, above_right, below_left, below_right]
 
         puts "Valid moves #{@valid_moves}"
+        puts "Jump moves #{@jump_moves}"
+        puts ""
+        puts ""
     end
 end
