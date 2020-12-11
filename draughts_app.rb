@@ -40,7 +40,7 @@ def main_menu
     menu_selection = prompt.select("Select an option:") do |menu|
         menu.choice "➊ Start a new game", 1
         menu.choice "➋ How to play", 2
-        menu.choice "➌ Display game history", 3
+        menu.choice "➌ Display win counts", 3
         menu.choice "➍ Exit program", 4
     end
 

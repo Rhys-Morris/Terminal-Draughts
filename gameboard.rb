@@ -45,7 +45,7 @@ class Gameboard
     end
 
     def populate_new_board
-        # Populate black markers
+        # Populate blue markers
         @current_board[:a1] = BlueMarker.new
         @current_board[:c1] = BlueMarker.new
         @current_board[:e1] = BlueMarker.new
@@ -64,7 +64,7 @@ class Gameboard
         @current_board[:d6] = RedMarker.new
         @current_board[:f6] = RedMarker.new
         @current_board[:h6] = RedMarker.new
-        @current_board[:a7] = BlueMarker.new
+        @current_board[:a7] = RedMarker.new
         @current_board[:c7] = RedMarker.new
         @current_board[:e7] = RedMarker.new
         @current_board[:g7] = RedMarker.new
@@ -124,11 +124,12 @@ class Gameboard
     
     # Print game winner
     def print_winner
+        system "clear"
         if @blue_markers == 0
-            "\nRed is the winner!"
+            puts "\nRed is the winner!"
             @winner = "red"
         elsif @red_markers == 0
-            "\nBlue is the winner!"
+            puts "\nBlue is the winner!"
             @winner = "blue"
         end
     end
@@ -156,12 +157,12 @@ class Gameboard
         f.write("Win Counts")
         f.write("\n\n")
         if @winner == "blue"
-            f.write("Blue: #{blue_win_count + 1}")
+            f.write("Blue: #{blue_win_count + 1}\n")
         else
             f.write(blue_wins)
         end
         if @winner == "red"
-            f.write("Red: #{red_win_count + 1}")
+            f.write("Red: #{red_win_count + 1}\n")
         else
             f.write(red_wins)
         end
@@ -239,7 +240,7 @@ class Gameboard
     def make_move
 
         #Clear screen
-        system "clear"
+        # system "clear"
 
         # Print current turn
         self.print_board
@@ -259,6 +260,7 @@ class Gameboard
                 # Check if game has been won
                 if self.check_win
                     self.print_winner
+                    sleep(3)
                     self.handle_game_over
                 end
                 return
@@ -278,6 +280,7 @@ class Gameboard
 
             #Handle deletion of jumped markers
             moved_marker.jump_moves[position_moved_to].each do |opposite_marker|
+                puts opposite_marker
                 # puts "Attempting to delete #{@current_board[opposite_marker]}"            # DEBUGGING
                 @current_board[opposite_marker] = nil
 
