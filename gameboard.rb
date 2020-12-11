@@ -115,4 +115,45 @@ class Gameboard
             puts ""
         end
     end
+
+    # Return boolean
+    def check_win
+        @blue_markers == 0 || @red_markers == 0
+    end
+    
+    # Print game winner
+    def print_winner
+        if @blue_markers == 0
+            "\nRed is the winner!"
+        else
+            "\nBlue is the winner!"
+        end
+    end
+    
+    def handle_game_over
+        @game_live = false
+    end
+    
+    # Print current turn
+    def print_turn
+        puts "\nIt is #{@current_turn.capitalize}'s turn!"
+    end
+    
+    def print_marker_counts
+        puts "\nThe current marker counts are:\nBlue: #{@blue_markers}\nRed: #{@red_markers}"
+    end
+    
+    # Update color turn
+    def update_turn
+        @current_turn = @current_turn == "red" ? "blue" : "red"
+    end
+    
+    # Decrement marker count
+    def decrement_marker_count(color)
+        if color == "red"
+            @red_markers -= 1
+        else
+            @blue_markers -= 1
+        end
+    end
 end
