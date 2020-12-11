@@ -64,7 +64,7 @@ class Gameboard
         @current_board[:d6] = RedMarker.new
         @current_board[:f6] = RedMarker.new
         @current_board[:h6] = RedMarker.new
-        @current_board[:a7] = RedMarker.new
+        @current_board[:a7] = BlueMarker.new
         @current_board[:c7] = RedMarker.new
         @current_board[:e7] = RedMarker.new
         @current_board[:g7] = RedMarker.new
