@@ -39,8 +39,8 @@ class Gameboard
         # Populate new board
         self.populate_new_board
 
-        # # Update possible starting moves
-        # self.update_possible_marker_moves
+        # Update possible starting moves
+        self.update_possible_marker_moves
     end
 
     def populate_new_board
@@ -154,6 +154,16 @@ class Gameboard
             @red_markers -= 1
         else
             @blue_markers -= 1
+        end
+    end
+
+    # Iterate over all cells to find where markers are positioned
+    # Call update_valid_moves to populate possible moves on each marker
+    def update_possible_marker_moves
+        @@cells.each do |cell|
+            if @current_board[cell]
+                @current_board[cell].update_valid_moves(@@rows, @current_board, cell)
+            end
         end
     end
 end
