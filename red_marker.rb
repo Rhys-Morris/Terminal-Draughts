@@ -28,7 +28,7 @@ class RedMarker < Marker
         if diagonal_right_cell && !current_state[diagonal_right_cell]
             @valid_moves << diagonal_right_cell
         # If contains opposite marker - check if can be jumped
-        elsif diagonal_right_cell && current_state[diagonal_right_cell].color == "black"
+        elsif diagonal_right_cell && current_state[diagonal_right_cell].color == "blue"
             jump_index = diagonal_right_cell_index + 1
             jump_row = board[current_row - 2]   # Improve logic flow here
             unless jump_index > 7 then jump_cell = jump_row[jump_index] end
@@ -44,7 +44,7 @@ class RedMarker < Marker
         if diagonal_left_cell && !current_state[diagonal_left_cell]
             @valid_moves << diagonal_left_cell
         # If contains opposite marker - check if can be jumped
-        elsif diagonal_left_cell && current_state[diagonal_left_cell].color == "black"
+        elsif diagonal_left_cell && current_state[diagonal_left_cell].color == "blue"
             jump_index = diagonal_left_cell_index - 1
             jump_row = board[current_row - 2]   # Improve logic flow here
             unless jump_index < 0 then jump_cell = jump_row[jump_index] end

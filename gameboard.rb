@@ -45,7 +45,7 @@ class Gameboard
 
     def populate_new_board
         # Populate black markers
-        @current_board[:a1] = KingMarker.new("blue")
+        @current_board[:a1] = BlueMarker.new
         @current_board[:c1] = BlueMarker.new
         @current_board[:e1] = BlueMarker.new
         @current_board[:g1] = BlueMarker.new
@@ -55,7 +55,7 @@ class Gameboard
         @current_board[:h2] = BlueMarker.new
         @current_board[:a3] = BlueMarker.new
         @current_board[:c3] = BlueMarker.new
-        @current_board[:e3] = nil
+        @current_board[:e3] = BlueMarker.new
         @current_board[:g3] = BlueMarker.new
 
         # Populate red markers
@@ -70,17 +70,17 @@ class Gameboard
         @current_board[:b8] = RedMarker.new
         @current_board[:d8] = RedMarker.new
         @current_board[:f8] = RedMarker.new
-        @current_board[:h8] = KingMarker.new("red")
+        @current_board[:h8] = RedMarker.new
 
         # Populate empty spots
         @current_board[:b4] = nil
         @current_board[:d4] = nil
-        @current_board[:f4] = RedMarker.new
+        @current_board[:f4] = nil
         @current_board[:h4] = nil
         @current_board[:a5] = nil
         @current_board[:c5] = nil
         @current_board[:e5] = nil
-        @current_board[:g5] = KingMarker.new("blue")
+        @current_board[:g5] = nil
     end
 
     def print_board
@@ -199,5 +199,101 @@ class Gameboard
     # Return boolean
     def check_valid_move(marker, move_position)
         return marker.valid_moves.include? move_position
+    end
+
+    # Make a move
+    def make_move
+
+        #Clear screen
+        system "clear"
+
+        # Print current turn
+        self.print_board
+        self.print_marker_counts
+        self.print_turn
+
+        # Loop move selection until valid
+        while true
+            marker_to_move = self.select_marker
+            position_to_move = self.select_move_position
+
+            # Valid move? - Update board and turn
+            if check_valid_move(marker_to_move, position_to_move)
+                self.update_board(marker_to_move, position_to_move)             
+                self.update_turn
+
+                # Check if game has been won
+                if self.check_win
+                    self.print_winner
+                    self.handle_game_over
+                end
+                return
+
+            # Handle invalid move selection
+            else
+                puts "\nInvalid move selection! Please try again!"
+                self.print_board
+            end
+        end
+    end
+
+    def update_board(moved_marker, position_moved_to)
+        
+        # Is this a jump move?
+        if moved_marker.jump_moves.include? position_moved_to
+
+            #Handle deletion of jumped markers
+            moved_marker.jump_moves[position_moved_to].each do |opposite_marker|
+                # puts "Attempting to delete #{@current_board[opposite_marker]}"            # DEBUGGING
+                @current_board[opposite_marker] = nil
+
+                # Decrement marker count
+                if @current_turn == "red" then self.decrement_marker_count("blue") end
+                if @current_turn == "blue" then self.decrement_marker_count("red") end
+            end
+        end
+
+        # Delete marker from previous position
+        @@cells.each do |cell|
+            if @current_board[cell] == moved_marker then @current_board[cell] = nil end
+        end
+
+        # Add marker to new position
+        if @current_turn == "red"
+            if moved_marker.king
+                @current_board[position_moved_to] = KingMarker.new("red")
+            else
+                @current_board[position_moved_to] = RedMarker.new
+            end
+        else
+            if moved_marker.king
+                @current_board[position_moved_to] = KingMarker.new("blue")
+            else
+                @current_board[position_moved_to] = BlueMarker.new
+            end
+        end
+
+        # Check if any markers need to be converted to Kings
+        red_king_row = @@rows[0]
+        blue_king_row = @@rows[7]
+
+        red_king_row.each do |cell|
+            if !current_board[cell]
+                next
+            elsif @current_board[cell].color == "red"
+                @current_board[cell] = KingMarker.new("red")
+            end
+        end
+
+        blue_king_row.each do |cell|
+            if !current_board[cell]
+                next
+            elsif @current_board[cell].color == "blue"
+                @current_board[cell] = KingMarker.new("blue")
+            end
+        end
+
+        # Update possible moves
+        self.update_possible_marker_moves
     end
 end

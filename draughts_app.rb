@@ -71,35 +71,23 @@ end
 # Create a new game and allow gameboard logic to control flow
 def start_game
     new_game = Gameboard.new
-    # while new_game.game_live
-    #     new_game.make_move
-    # end
+    while new_game.game_live
+        new_game.make_move
+    end
 
-    new_game.print_board
-
+    # Prompt to return to main menu
     puts "\nEnter y when ready to return to menu"
     selection = ""
     while selection != "y"
         selection = gets.chomp.downcase
     end
     welcome
-
-    # Game concluded - return to menu
-    welcome
 end
 
 # How to play instructions
 def instructions
     system "clear"
-    puts "
-    ╔╗─╔╗─────────╔╗───────╔╗
-    ║║─║║────────╔╝╚╗──────║║
-    ║╚═╝╠══╦╗╔╗╔╗╚╗╔╬══╗╔══╣║╔══╦╗─╔╗
-    ║╔═╗║╔╗║╚╝╚╝║─║║║╔╗║║╔╗║║║╔╗║║─║║
-    ║║─║║╚╝╠╗╔╗╔╝─║╚╣╚╝║║╚╝║╚╣╔╗║╚═╝║
-    ╚╝─╚╩══╝╚╝╚╝──╚═╩══╝║╔═╩═╩╝╚╩═╗╔╝
-    ────────────────────║║──────╔═╝║
-    ────────────────────╚╝──────╚══╝"
+    puts "How to Play"
     puts "\n\n"
     puts "Select a marker by typing into terminal"
     puts "\nEnter y when ready to return to menu"
