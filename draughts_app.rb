@@ -3,7 +3,7 @@ require "tty-prompt"
 require_relative './errors.rb'
 require_relative './gameboard.rb'
 
-# Handle command line arguments
+# ----- HANDLE COMMAND LINE ARGUMENTS -----
 
 # ----- HELPER FUNCTIONS -----
 
@@ -112,35 +112,12 @@ end
 
 # Check win history
 def check_win_history
-    puts "This section is TO DO"
+    # Open file that is storing previous game data
+    # Print data to screen
+    # Close file
+    # Return to menu
 end
 
-# Program logic
-
+# Initialise program flow
 welcome
 
-
-# Menu selection
-# 1. Start a new game
-# 2. Print player instructions
-# 3. Print game history (from file)
-# 4. Exit
-
-# 1.
-# Instantiate a new game
-# while game is live
-# continue making moves
-# Once game is won and breaks --> return to menu
-
-# 2.
-# Print player instructions
-# Return to menu
-
-# 3.
-# Open file that is storing previous game data
-# Print data to screen
-# Close file
-# Return to menu
-
-# 4.
-# Exit program

@@ -166,4 +166,38 @@ class Gameboard
             end
         end
     end
+
+    # Returns a marker of current turn's colour 
+    def select_marker
+        puts "\nSelect a marker to move:"
+        selection = gets.chomp.downcase.to_sym
+        if !@@cells.include? selection
+            puts "\nInvalid selection. Please select again!"
+            self.select_marker
+        else
+            if @current_board[selection] == nil || @current_board[selection].color != @current_turn
+                puts "\nInvalid selection. You must select a marker of your color. Please select again!"
+                self.select_marker
+            else
+                return @current_board[selection]
+            end
+        end
+    end
+
+    # Return a position on the gameboard
+    def select_move_position
+        puts "\nSelect a position to move to:"
+        selection = gets.chomp.downcase.to_sym
+        if !@@cells.include? selection
+            puts "\nInvalid selection. Please select again!"
+            self.select_move_position
+        else
+            return selection
+        end
+    end
+
+    # Return boolean
+    def check_valid_move(marker, move_position)
+        return marker.valid_moves.include? move_position
+    end
 end

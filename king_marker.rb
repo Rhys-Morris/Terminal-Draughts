@@ -66,7 +66,7 @@ class KingMarker < Marker
             @valid_moves << below_right
         end
 
-        # Check if cell has opposite colour and can be jumped
+        # Check for jumps in surrounding cells
         if above_left && current_state[above_left]
             if current_state[above_left].color == opposite_color
                 jump_row_index = row_above_index - 1
@@ -135,12 +135,12 @@ class KingMarker < Marker
             end
         end
 
-        puts "King marker at #{current_position} cells surrounding"
-        p [above_left, above_right, below_left, below_right]
+        # puts "King marker at #{current_position} cells surrounding"
+        # p [above_left, above_right, below_left, below_right]
 
-        puts "Valid moves #{@valid_moves}"
-        puts "Jump moves #{@jump_moves}"
-        puts ""
-        puts ""
+        # puts "Valid moves #{@valid_moves}"
+        # puts "Jump moves #{@jump_moves}"
+        # puts ""
+        # puts ""
     end
 end
