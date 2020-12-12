@@ -62,14 +62,16 @@ def main_menu
     rescue InvalidMenu
         puts "Invalid menu input. Please try again!"
         retry
-    # rescue
-    #     puts "An unexpected error occurred, the program will now exit"
-    #     exit
 end
 
 # Create a new game and allow gameboard logic to control flow
 def start_game
-    new_game = Gameboard.new
+
+    puts "Who is playing as red?"
+    player_one = gets.chomp
+    puts "\nWho is playing as blue?"
+    player_two = gets.chomp
+    new_game = Gameboard.new(player_one, player_two)
 
     while new_game.game_live
         new_game.make_move
@@ -87,9 +89,22 @@ end
 # How to play instructions
 def instructions
     system "clear"
-    puts "How to Play"
+    puts "
+    █░█ █▀█ █░█░█   ▀█▀ █▀█   █▀█ █░░ ▄▀█ █▄█
+    █▀█ █▄█ ▀▄▀▄▀   ░█░ █▄█   █▀▀ █▄▄ █▀█ ░█░".colorize(:red)
     puts "\n\n"
-    puts "Select a marker by typing into terminal"
+    puts "A game will start with 12 red and 12 blue markers."
+    puts "Players will take turns moving their markers until 1 player runs out of markers, at which point the game is over and the player with markers remaining is the winner.\n\n"
+    puts "Markers can be moved diagonally only. If your marker is blocked by a marked of the opposing player, this marker can be jumped providing there is an empty space behind the opposing marker."
+    puts "The aim is to jump over all opposing markers to win the game!\n\n"
+    puts "Markers can only move in a forward direction, unless they are a king."
+    puts "King markers are represented by a 'K' on the gameboard."
+    puts "A king is created should you manage to direct your marker to the final board row in the direction you are moving."
+    puts "King markers are able to move both forwards and backwards.\n\n"
+    puts "Players will be prompted to select a marker during their turn, via keyboard input."
+    puts "Each position on the gameboard is designated a specific position e.g. a1 or e7"
+    puts "A marker and move position can be selected by inputting the gameboard position when prompted"
+    puts "If the move is valid - it will be made and the board updated.\n\n"
     puts "\nEnter y when ready to return to menu"
     selection = ""
     while selection != "y"
@@ -157,6 +172,12 @@ def handle_flags
     when "wins"
         ARGV.clear
         check_win_history
+    when "-v"
+        puts "Draughts 1.0.1 © Rhys Morris 2020. Ruby Version: #{RUBY_VERSION}"
+        exit
+    when "--version"
+        puts "Draughts 1.0.1 © Rhys Morris 2020. Ruby Version: #{RUBY_VERSION}"
+        exit
     end
 end
 

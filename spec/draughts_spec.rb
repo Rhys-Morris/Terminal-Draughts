@@ -91,6 +91,17 @@ describe 'Gameboard' do
         expect(@new_game.current_turn).to eq "red"
     end
 
+    it "should have default player1 and player2 values when instantiated without arguments" do
+        expect(@new_game.player_one).to eq "Player 1"
+        expect(@new_game.player_two).to eq "Player 2"
+    end
+
+    it "should have specific player1 and player2 values when instantiated with arguments" do
+        @specific_game = Gameboard.new("Rhys", "Robyn")
+        expect(@specific_game.player_one).to eq "Rhys"
+        expect(@specific_game.player_two).to eq "Robyn"
+    end
+
     # Decrement marker count method
     describe "decrement_marker_count" do
         it "should decrement marker count by 1 when called" do
@@ -113,25 +124,6 @@ describe 'Gameboard' do
             end
             expect(@new_game.red_markers).to be 0
             expect(@new_game.check_win).to be true
-        end
-    end
-
-    # Print winner
-    describe "print_winner" do
-        it "should print blue when red_markers is 0" do
-            12.times do
-                @new_game.decrement_marker_count("red")
-            end
-            expect(@new_game.red_markers).to be 0
-            expect(@new_game.print_winner).to eq "\nBlue is the winner!"
-        end
-
-        it "should print red when blue_markers is 0" do
-            12.times do
-                @new_game.decrement_marker_count("blue")
-            end
-            expect(@new_game.blue_markers).to be 0
-            expect(@new_game.print_winner).to eq "\nRed is the winner!"
         end
     end
 
