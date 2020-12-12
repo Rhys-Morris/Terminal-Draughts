@@ -52,8 +52,7 @@ def main_menu
     when 3
         check_win_history
     when 4
-        puts "\nGoodbye!"
-        sleep(2)
+        puts "\nThanks for playing\n\nGoodbye!"
         exit
     else
         raise InvalidMenu

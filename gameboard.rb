@@ -2,6 +2,7 @@ require_relative "./blue_marker"
 require_relative "./red_marker"
 require_relative "./king_marker"
 require "colorize"
+require "date"
 
 class Gameboard
     attr_reader :current_board, :red_markers, :blue_markers, :current_turn, :game_live, :winner, :player_one, :player_two
@@ -28,8 +29,8 @@ class Gameboard
 
     def initialize(player_one="Player 1", player_two="Player 2")
         @current_board = {}
-        @red_markers = 12
-        @blue_markers = 12
+        @red_markers = 1
+        @blue_markers = 1
         @current_turn = "red"
         @game_live = true
         @winner = nil
@@ -48,32 +49,32 @@ class Gameboard
 
     def populate_new_board
         # Populate blue markers
-        @current_board[:a1] = BlueMarker.new
-        @current_board[:c1] = BlueMarker.new
-        @current_board[:e1] = BlueMarker.new
-        @current_board[:g1] = BlueMarker.new
-        @current_board[:b2] = BlueMarker.new
-        @current_board[:d2] = BlueMarker.new
-        @current_board[:f2] = BlueMarker.new
-        @current_board[:h2] = BlueMarker.new
-        @current_board[:a3] = BlueMarker.new
-        @current_board[:c3] = BlueMarker.new
-        @current_board[:e3] = BlueMarker.new
-        @current_board[:g3] = BlueMarker.new
+        @current_board[:a1] = nil
+        @current_board[:c1] = nil
+        @current_board[:e1] = nil
+        @current_board[:g1] = nil
+        @current_board[:b2] = nil
+        @current_board[:d2] = nil
+        @current_board[:f2] = nil
+        @current_board[:h2] = nil
+        @current_board[:a3] = nil
+        @current_board[:c3] = nil
+        @current_board[:e3] = nil
+        @current_board[:g3] = nil
 
         # Populate red markers
-        @current_board[:b6] = RedMarker.new
-        @current_board[:d6] = RedMarker.new
-        @current_board[:f6] = RedMarker.new
-        @current_board[:h6] = RedMarker.new
-        @current_board[:a7] = RedMarker.new
+        @current_board[:b6] = nil
+        @current_board[:d6] = BlueMarker.new
+        @current_board[:f6] = nil
+        @current_board[:h6] = nil
+        @current_board[:a7] = nil
         @current_board[:c7] = RedMarker.new
-        @current_board[:e7] = RedMarker.new
-        @current_board[:g7] = RedMarker.new
-        @current_board[:b8] = RedMarker.new
-        @current_board[:d8] = RedMarker.new
-        @current_board[:f8] = RedMarker.new
-        @current_board[:h8] = RedMarker.new
+        @current_board[:e7] = nil
+        @current_board[:g7] = nil
+        @current_board[:b8] = nil
+        @current_board[:d8] = nil
+        @current_board[:f8] = nil
+        @current_board[:h8] = nil
 
         # Populate empty spots
         @current_board[:b4] = nil
@@ -142,6 +143,7 @@ class Gameboard
         self.update_win_history
     end
 
+    # Write to colour win counts
     def update_win_counts
         f = File.open("./game_history/win_counts.txt", "r")
         blue_wins = ""
@@ -172,8 +174,13 @@ class Gameboard
         f.close
     end
 
+    # Write to win history
     def update_win_history
-        f = File.open("./game_history/win_counts.txt", "a")
+        f = File.open("./game_history/win_history.txt", "a")
+        time = Time.new
+        date = Date.parse(time.to_s)
+        player_winner = @winner == "red" ? player_one : player_two
+        f.write("\n#{date.strftime('%a %d %b %Y')} #{player_winner} playing as #{winner}")
         f.close
     end
     
