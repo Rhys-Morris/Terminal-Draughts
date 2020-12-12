@@ -114,8 +114,8 @@ end
 
 # Check win history
 def check_win_history
-    win_history = File.open("./game_history/win_counts.txt")
-    win_history.readlines.each_with_index do |line, index|
+    win_counts = File.open("./game_history/win_counts.txt", "r")
+    win_counts.readlines.each_with_index do |line, index|
         if index == 2
             split_line = line.strip.split(' ')
             puts "#{split_line[0].colorize(:blue)}: #{split_line[1].to_i}"
@@ -126,7 +126,27 @@ def check_win_history
             puts line
         end
     end
+    win_counts.close
+
+    puts ""
+    puts "🄻🄴🄰🄳🄴🅁🄱🄾🄰🅁🄳"
+    puts ""
+
+    leaders = {}
+    win_history = File.open("./game_history/win_history.txt", "r")
+    win_history. readlines.each_with_index do |line, index|
+        if index < 2 then next end
+        winner = line.split(' ')[4]
+        if leaders[winner]
+            leaders[winner] += 1
+        else
+            leaders[winner] = 1
+        end
+    end
+    sorted_leaders = leaders.sort_by {|k, v| -v}
+    sorted_leaders.each {|name_count| puts "#{name_count[0]}: #{name_count[1]}"}
     win_history.close
+
 
     puts "\nEnter y when ready to return to menu"
     selection = ""
