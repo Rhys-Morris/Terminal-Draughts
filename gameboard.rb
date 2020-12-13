@@ -214,7 +214,6 @@ class Gameboard
         current_state = @current_board.dup
         @@cells.each_with_index do |cell, index|
             if @current_board[cell]
-                # puts "Calling a cell update with this gameboard: #{current_state} this pass #{index}"
                 @current_board[cell].update_valid_moves(@@rows, current_state, cell)
             end
         end
@@ -254,6 +253,21 @@ class Gameboard
         return marker.valid_moves.include? move_position
     end
 
+    # Return boolean
+    def no_valid_moves_possible(current_color)
+        # Look at all markers of current turn colour
+        # Aggregate valid moves - if length is 0 then no moves are possible
+        total_valid_moves = []
+        @@cells.each do |cell|
+            if current_board[cell]
+                if current_board[cell].color == current_color
+                    total_valid_moves.concat(current_board[cell].valid_moves)
+                end
+            end
+        end
+        return total_valid_moves.length == 0 ? true : false
+    end
+
     # Make a move
     def make_move
 
@@ -264,6 +278,15 @@ class Gameboard
         self.print_board
         self.print_marker_counts
         self.print_turn
+
+        # Check whether edge case no valid moves possible
+        if self.no_valid_moves_possible(@current_turn)
+            puts "\nNo valid moves are possible for #{@current_turn.capitalize}!"
+            puts "Switching turns in 3 seconds"
+            sleep(3)
+            self.update_turn
+            self.make_move
+        end
 
         # Loop move selection until valid
         while true

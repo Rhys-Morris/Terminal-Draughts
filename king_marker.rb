@@ -82,8 +82,9 @@ class KingMarker < Marker
                 end
                 unless !jump_cell
                     if !current_state[jump_cell]
-                        @valid_moves << jump_cell
-                        # Checking longer jump chain does not already exist - if exists must be 1 or greater already
+                        unless @valid_moves.include?(jump_cell) then @valid_moves<< jump_cell end
+                        # Checking longer jump chain does not already exist
+                        # If exists must be 1 or greater already
                         if !@jump_moves[jump_cell]
                             @jump_moves[jump_cell] = [above_left]
                         end
@@ -105,8 +106,9 @@ class KingMarker < Marker
                 end
                 unless !jump_cell
                     if !current_state[jump_cell]
-                        @valid_moves << jump_cell
-                        # Checking longer jump chain does not already exist - if exists must be 1 or greater already
+                        unless @valid_moves.include?(jump_cell) then @valid_moves<< jump_cell end
+                        # Checking longer jump chain does not already exist
+                        # If exists must be 1 or greater already
                         if !@jump_moves[jump_cell]
                             @jump_moves[jump_cell] = [above_right]
                         end
@@ -128,8 +130,9 @@ class KingMarker < Marker
                 end
                 unless !jump_cell
                     if !current_state[jump_cell]
-                        @valid_moves << jump_cell
-                        # Checking longer jump chain does not already exist - if exists must be 1 or greater already
+                        unless @valid_moves.include?(jump_cell) then @valid_moves<< jump_cell end
+                        # Checking longer jump chain does not already exist
+                        # If exists must be 1 or greater already
                         if !@jump_moves[jump_cell]
                             @jump_moves[jump_cell] = [below_left]
                         end
@@ -151,8 +154,9 @@ class KingMarker < Marker
                 end
                 unless !jump_cell
                     if !current_state[jump_cell]
-                        @valid_moves << jump_cell
-                        # Checking longer jump chain does not already exist - if exists must be 1 or greater already
+                        unless @valid_moves.include?(jump_cell) then @valid_moves<< jump_cell end
+                        # Checking longer jump chain does not already exist
+                        # If exists must be 1 or greater already
                         if !@jump_moves[jump_cell]
                             @jump_moves[jump_cell] = [below_right]
                         end
@@ -207,7 +211,7 @@ class KingMarker < Marker
                 # Prevent moving backwards and infinite loop
                 unless jump_cell == previous_position
                     if jump_cell && !current_state[jump_cell]
-                        @valid_moves << jump_cell
+                        unless @valid_moves.include?(jump_cell) then @valid_moves<< jump_cell end
                         jumps_copy = jumps.dup
                         puts current_position
                         jumps_copy << below_right_cell
@@ -236,7 +240,7 @@ class KingMarker < Marker
                 # Prevent moving backwards and infinite loop
                 unless jump_cell == previous_position
                     if jump_cell && !current_state[jump_cell]
-                        @valid_moves << jump_cell
+                        unless @valid_moves.include?(jump_cell) then @valid_moves<< jump_cell end
                         jumps_copy = jumps.dup
                         jumps_copy << below_left_cell
                         # Check whether a longer jump chain already exists
@@ -265,7 +269,7 @@ class KingMarker < Marker
                 # Prevent moving backwards and infinite loop
                 unless jump_cell == previous_position
                     if jump_cell && !current_state[jump_cell]
-                        @valid_moves << jump_cell
+                        unless @valid_moves.include?(jump_cell) then @valid_moves<< jump_cell end
                         jumps_copy = jumps.dup
                         jumps_copy << above_right_cell
                         # Check whether a longer jump chain already exists
@@ -293,7 +297,7 @@ class KingMarker < Marker
                 # Prevent moving backwards and infinite loop
                 unless jump_cell == previous_position
                     if jump_cell && !current_state[jump_cell]
-                        @valid_moves << jump_cell
+                        unless @valid_moves.include?(jump_cell) then @valid_moves<< jump_cell end
                         jumps_copy = jumps.dup
                         jumps_copy << above_left_cell
                         # Check whether a longer jump chain already exists
