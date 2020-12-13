@@ -54,8 +54,8 @@ class Gameboard
         @current_board[:e1] = nil
         @current_board[:g1] = nil
         @current_board[:b2] = nil
-        @current_board[:d2] = BlueMarker.new
-        @current_board[:f2] = BlueMarker.new
+        @current_board[:d2] = nil
+        @current_board[:f2] = nil
         @current_board[:h2] = nil
         @current_board[:a3] = nil
         @current_board[:c3] = nil
@@ -63,27 +63,27 @@ class Gameboard
         @current_board[:g3] = nil
 
         # Populate red markers
-        @current_board[:b6] = nil
+        @current_board[:b6] = RedMarker.new
         @current_board[:d6] = nil
         @current_board[:f6] = nil
         @current_board[:h6] = nil
-        @current_board[:a7] = nil
+        @current_board[:a7] = BlueMarker.new
         @current_board[:c7] = nil
         @current_board[:e7] = nil
         @current_board[:g7] = nil
-        @current_board[:b8] = nil
+        @current_board[:b8] = RedMarker.new
         @current_board[:d8] = nil
         @current_board[:f8] = nil
         @current_board[:h8] = nil
 
         # Populate empty spots
         @current_board[:b4] = nil
-        @current_board[:d4] = BlueMarker.new
-        @current_board[:f4] = BlueMarker.new
+        @current_board[:d4] = nil
+        @current_board[:f4] = nil
         @current_board[:h4] = nil
         @current_board[:a5] = nil
         @current_board[:c5] = nil
-        @current_board[:e5] = KingMarker.new("red")
+        @current_board[:e5] = nil
         @current_board[:g5] = nil
     end
 
@@ -272,7 +272,7 @@ class Gameboard
     def make_move
 
         # Clear screen
-        # system "clear"
+        system "clear"
 
         # Print current turn
         self.print_board
@@ -285,7 +285,7 @@ class Gameboard
             puts "Switching turns in 3 seconds"
             sleep(3)
             self.update_turn
-            self.make_move
+            return
         end
 
         # Loop move selection until valid

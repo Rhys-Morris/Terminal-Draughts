@@ -169,8 +169,8 @@ class KingMarker < Marker
         end
 
         # Debugging
-        pp @valid_moves
-        puts @jump_moves
+        # pp @valid_moves
+        # puts @jump_moves
         # pp current_state
     end
 
