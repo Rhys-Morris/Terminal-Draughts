@@ -83,7 +83,10 @@ class KingMarker < Marker
                 unless !jump_cell
                     if !current_state[jump_cell]
                         @valid_moves << jump_cell
-                        @jump_moves[jump_cell] = [above_left]
+                        # Checking longer jump chain does not already exist - if exists must be 1 or greater already
+                        if !@jump_moves[jump_cell]
+                            @jump_moves[jump_cell] = [above_left]
+                        end
                         # Remove jumped cell from current state board
                         current_state_new[above_left] = nil
                         self.check_additional_jump(board, current_state_new, jump_cell, [above_left], current_position)
@@ -103,9 +106,12 @@ class KingMarker < Marker
                 unless !jump_cell
                     if !current_state[jump_cell]
                         @valid_moves << jump_cell
-                        @jump_moves[jump_cell] = [above_right]
+                        # Checking longer jump chain does not already exist - if exists must be 1 or greater already
+                        if !@jump_moves[jump_cell]
+                            @jump_moves[jump_cell] = [above_right]
+                        end
                         # Remove jumped cell from current state board
-                        current_state_new[above_left] = nil
+                        current_state_new[above_right] = nil
                         self.check_additional_jump(board, current_state_new, jump_cell, [above_right], current_position)
                     end
                 end
@@ -123,9 +129,12 @@ class KingMarker < Marker
                 unless !jump_cell
                     if !current_state[jump_cell]
                         @valid_moves << jump_cell
-                        @jump_moves[jump_cell] = [below_left]
+                        # Checking longer jump chain does not already exist - if exists must be 1 or greater already
+                        if !@jump_moves[jump_cell]
+                            @jump_moves[jump_cell] = [below_left]
+                        end
                         # Remove jumped cell from current state board
-                        current_state_new[above_left] = nil
+                        current_state_new[below_left] = nil
                         self.check_additional_jump(board, current_state_new, jump_cell, [below_left], current_position)
                     end
                 end
@@ -143,9 +152,12 @@ class KingMarker < Marker
                 unless !jump_cell
                     if !current_state[jump_cell]
                         @valid_moves << jump_cell
-                        @jump_moves[jump_cell] = [below_right]
+                        # Checking longer jump chain does not already exist - if exists must be 1 or greater already
+                        if !@jump_moves[jump_cell]
+                            @jump_moves[jump_cell] = [below_right]
+                        end
                         # Remove jumped cell from current state board
-                        current_state_new[above_left] = nil
+                        current_state_new[below_right] = nil
                         self.check_additional_jump(board, current_state_new, jump_cell, [below_right], current_position)
                     end
                 end
@@ -199,7 +211,14 @@ class KingMarker < Marker
                         jumps_copy = jumps.dup
                         puts current_position
                         jumps_copy << below_right_cell
-                        @jump_moves[jump_cell] = jumps_copy
+                        # Check whether a longer jump chain already exists
+                        if !@jump_moves[jump_cell]
+                            @jump_moves[jump_cell] = jumps_copy
+                        else
+                            if jumps_copy.length > jump_moves[jump_cell].length
+                                @jump_moves[jump_cell] = jumps_copy
+                            end
+                        end
                         # Remove jumped cell from current state board
                         current_state_new[below_right_cell] = nil
                         self.check_additional_jump(board, current_state_new, jump_cell, jumps_copy, current_position)
@@ -220,7 +239,14 @@ class KingMarker < Marker
                         @valid_moves << jump_cell
                         jumps_copy = jumps.dup
                         jumps_copy << below_left_cell
-                        @jump_moves[jump_cell] = jumps_copy
+                        # Check whether a longer jump chain already exists
+                        if !@jump_moves[jump_cell]
+                            @jump_moves[jump_cell] = jumps_copy
+                        else
+                            if jumps_copy.length > jump_moves[jump_cell].length
+                                @jump_moves[jump_cell] = jumps_copy
+                            end
+                        end
                         # Remove jumped cell from current state board
                         current_state_new[below_left_cell] = nil
                         self.check_additional_jump(board, current_state_new, jump_cell, jumps_copy, current_position)
@@ -242,7 +268,14 @@ class KingMarker < Marker
                         @valid_moves << jump_cell
                         jumps_copy = jumps.dup
                         jumps_copy << above_right_cell
-                        @jump_moves[jump_cell] = jumps_copy
+                        # Check whether a longer jump chain already exists
+                        if !@jump_moves[jump_cell]
+                            @jump_moves[jump_cell] = jumps_copy
+                        else
+                            if jumps_copy.length > jump_moves[jump_cell].length
+                                @jump_moves[jump_cell] = jumps_copy
+                            end
+                        end
                         # Remove jumped cell from current state board
                         current_state_new[above_right_cell] = nil
                         self.check_additional_jump(board, current_state_new, jump_cell, jumps_copy, current_position)
@@ -263,7 +296,14 @@ class KingMarker < Marker
                         @valid_moves << jump_cell
                         jumps_copy = jumps.dup
                         jumps_copy << above_left_cell
-                        @jump_moves[jump_cell] = jumps_copy
+                        # Check whether a longer jump chain already exists
+                        if !@jump_moves[jump_cell]
+                            @jump_moves[jump_cell] = jumps_copy
+                        else
+                            if jumps_copy.length > jump_moves[jump_cell].length
+                                @jump_moves[jump_cell] = jumps_copy
+                            end
+                        end
                         # Remove jumped cell from current state board
                         current_state_new[above_left_cell] = nil
                         self.check_additional_jump(board, current_state_new, jump_cell, jumps_copy, current_position)

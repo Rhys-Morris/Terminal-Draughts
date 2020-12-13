@@ -29,8 +29,8 @@ class Gameboard
 
     def initialize(player_one="Player 1", player_two="Player 2")
         @current_board = {}
-        @red_markers = 1
-        @blue_markers = 1
+        @red_markers = 12
+        @blue_markers = 12
         @current_turn = "red"
         @game_live = true
         @winner = nil
@@ -54,8 +54,8 @@ class Gameboard
         @current_board[:e1] = nil
         @current_board[:g1] = nil
         @current_board[:b2] = nil
-        @current_board[:d2] = nil
-        @current_board[:f2] = nil
+        @current_board[:d2] = BlueMarker.new
+        @current_board[:f2] = BlueMarker.new
         @current_board[:h2] = nil
         @current_board[:a3] = nil
         @current_board[:c3] = nil
@@ -64,11 +64,11 @@ class Gameboard
 
         # Populate red markers
         @current_board[:b6] = nil
-        @current_board[:d6] = BlueMarker.new
+        @current_board[:d6] = nil
         @current_board[:f6] = nil
         @current_board[:h6] = nil
         @current_board[:a7] = nil
-        @current_board[:c7] = RedMarker.new
+        @current_board[:c7] = nil
         @current_board[:e7] = nil
         @current_board[:g7] = nil
         @current_board[:b8] = nil
@@ -78,12 +78,12 @@ class Gameboard
 
         # Populate empty spots
         @current_board[:b4] = nil
-        @current_board[:d4] = nil
-        @current_board[:f4] = nil
+        @current_board[:d4] = BlueMarker.new
+        @current_board[:f4] = BlueMarker.new
         @current_board[:h4] = nil
         @current_board[:a5] = nil
         @current_board[:c5] = nil
-        @current_board[:e5] = nil
+        @current_board[:e5] = KingMarker.new("red")
         @current_board[:g5] = nil
     end
 
@@ -257,7 +257,7 @@ class Gameboard
     # Make a move
     def make_move
 
-        #Clear screen
+        # Clear screen
         # system "clear"
 
         # Print current turn
