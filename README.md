@@ -74,13 +74,19 @@ Invalid user input has been handled within the application via a combination of 
 
 Development of this project was managed through Trello. I used colored labels to indicate the expected time commitment for specific tasks. Red indicated a time commitment of 4+ hours, orange 2-4 hours and yellow <1 hour.
 
-Features were broken down into smaller tasks, and even separate cards when it made logical sense to do so. I considered all cards bar the `Extra Tasks If Time` to be essential to application development. The project would not be considered feature complete until these cards were finished.
+Features were broken down into smaller tasks, and even separate cards when it made logical sense to do so. I considered all cards bar the 'Extra Tasks If Time' to be essential to application development. The project would not be considered feature complete until these cards were finished. Minimal viable product was considered to be a working draughts game, without the extra leaderboard and menu features.
 
 The Trello board I used for project management is available to the public here: [Board](https://trello.com/b/2XPubgdp/terminal-draughts)
 
 Trello board in progress shots:
 
 ## How to Use and Install
+
+**Requirements**:
+
+Ruby version 2.7.0 or higher
+
+A terminal or terminal emulator.
 
 This application has several Ruby gem dependencies including:
 
@@ -92,4 +98,33 @@ This application has several Ruby gem dependencies including:
 
 A gemlock file is included for ease of dependency installation.
 
-If you have bundler installed on your machine
+No specific system or hardware requirements are required to run this application.
+
+**Installation**:
+
+To check if you have Ruby already installed use `ruby -v` within your terminal.
+
+For instructions on how to install Ruby on your operating system please follow this [guide](https://www.ruby-lang.org/en/documentation/installation/).
+
+Once Ruby is installed correctly, the next step is to acquire the bundler gem for dependency installation.
+
+This can be achieved in two ways
+
+1. Execute `install.sh` within the application directory. This will install bundler on your machine, and then subsequently install the required gem dependencies for the application.
+2. Manual installation:
+   - `gem install bundler` within your terminal
+   - Navigate to the root application directory in your terminal `.../Terminal-Draughts`
+   - Use the command `gem install` inside this directory to install all gem dependencies
+
+**Running the application**:
+
+The application must be run via the terminal. Navigate to the application directory inside your terminal. `.../Terminal-Draughts`
+
+The application can be launched via two ways:
+
+1. Running the command `./draughts.sh` inside the application directory
+2. Running the command `ruby draughts_app.rb` inside the application directory
+
+Both commands can be passed an optional command line argument. Only one argument can be passed at a time for reasons of application logic.
+
+Please see above for a list of possible command line arguments.
