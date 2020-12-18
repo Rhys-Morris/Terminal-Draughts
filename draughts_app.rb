@@ -19,7 +19,7 @@ def welcome
     ╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝░╚═════╝░░╚═════╝░╚═╝░░╚═╝░░░╚═╝░░░╚═════╝░\n\n\n"
 
     # Progress bar
-    bar = TTY::ProgressBar.new("[:bar]", total: 80)
+    bar = TTY::ProgressBar.new("[:bar]", total: 74)
     100.times do
         sleep(0.01)
         bar.advance(1)
@@ -61,8 +61,8 @@ def main_menu
     rescue InvalidMenu
         puts "Invalid menu input. Please try again!"
         retry
-    rescue
-        puts "An unexpected error has occured. The program will now exit."
+    # rescue
+    #     puts "An unexpected error has occured. The program will now exit."
 end
 
 # Create a new game and allow gameboard logic to control flow
@@ -131,7 +131,7 @@ def check_win_history
     win_counts.close
 
     puts ""
-    puts "🄻🄴🄰🄳🄴🅁🄱🄾🄰🅁🄳"
+    puts "🄻 🄴 🄰 🄳 🄴 🅁 🄱 🄾 🄰 🅁 🄳"
     puts ""
 
     leaders = {}
@@ -168,6 +168,7 @@ def command_line_info
     puts "Example: draughts.sh --help\n\n"
     puts "-h or --help      Display all command line arguments"
     puts "-i or --info      Display instructions on how to play"
+    puts "-v or --version   Display current application and Ruby version"
     puts "start             Skip menu and immediately start a new game"
     puts "wins              Print win counts"
     puts ""

@@ -6,25 +6,90 @@
 
 ## Software Development Plan
 
-This application is a programmatic implementation of draughts with the Ruby programming language. It allows two players to engage in a game of draughts electronically via the terminal.
+This application is a programmatic implementation of the two person board game draughts written with the Ruby programming language. It allows two players to engage in a game of draughts via the terminal.
 
-This application was developed in order to test my learned skills in the Ruby programming language to date, in particular, to expand upon my understanding of Object Oriented Programming.
+The application utilises external files to store information about player wins, and total wins for each marker colour. This information is accessible within the application to print a formatted leaderboard to the user when requested. The rules of the game are accessible via the application's main menu should a user be unfamiliar with the game of draughts.
 
-The target audience of this program is anyone who wishes to be entertained, it is intended as a recreational aid. It is perfect for someone who wishes to play a game of draughts with a friend, but does not have access to the board game.
+This application was designed to be a a recreational aid. The intended audience of this program is anyone who wishes to be entertained. It is perfect for a user who wishes to play a game of draughts with a friend, but does not have access to the board game.
+
+A secondary reason this application was developed was in order to test my learned skills in the Ruby programming language to date, in particular, to expand upon my understanding of Object Oriented Programming and conditional logic.
+
+This program can be launched by a user in two ways: via the `draughts_app.rb` file directly, or via a shell script `draughts.sh`. Command line arguments can be passed to either file to provide helpful information to the user, or to move to specific functionality within the application without accessing the main menu first.
+
+When the application is launched without command line arguments, the user will be presented with a menu of selectable options via keyboard input. This menu was created via the TTY-prompt gem. The menu options are: starting a new game, viewing the leaderboard, viewing how to play instructions and exiting the application. User's are prompted to return to the main menu when they are finished with a particular feature.
 
 ## Application Features
 
-- Play a two person game of draughts in the terminal
-- View previous game history and total win count for black versus red
-- How to play instructions
-- Launch new games and previous game history through the terminal via command line arguments
+1. Play a two person game of draughts in the terminal
+
+A new game is started via the main menu. The user will be prompted for the names of the two players prior to starting the game. These names are stored for use on the leaderboard once the game is completed.
+
+The game itself is replete with a full feature set expected of a draughts game including the ability to make multiple jumps and create king markers (markers that can move both forward and backwards).
+
+Players start with twelve markers each, the game ends when a players marker count reaches zero.
+
+The gameboard, current turn and marker counts are printed to the board each turn. A marker to move, and position to move to are selected by the user via keyboard input. If the move is invalid the user is informed and asked to select a new move.
+
+Once a valid move is selected, the board is updated and the current turn switches to the opposing player. This continues until the game ends.
+
+2. View previous game history and total win count for blue versus red
+
+Once a game is completed, the winner of the current game is stored within an external file `./game_history/win_history.txt`. The date of the win is stored alongside the player's name and colour they were playing as. Separately, the total win counts for each playable colour are stored in another external file `./game_history/win_counts.txt`.
+
+The main menu feature 'Display win counts' will parse these files to print out a neatly formatted leaderboard of total player wins. Wins will be sorted in descending order. Total win counts for each colour will also be printed to the terminal.
+
+3. How to play instructions
+
+It is expected that not all users of this application wil have prior experience playing draughts. The 'How to play' menu prompt informs users of the rules of the game.
+
+Once the user has read and understood the rules of the game, they are able to loop back to the main menu via a prompt.
+
+4. Launch new games and previous game history through the terminal via command line arguments
+
+A series of command line arguments have been included to assist user's in navigating the application swiftly, or simply to print further information regarding the application.
+
+Commands included:
+
+- `-h or --help` Display all command line arguments
+- `-i or --info` Display instructions on how to play
+- `-v or --version` Display current application and Ruby version
+- `start` Skip menu and immediately start a new game
+- `wins` Print win counts
 
 ## Outline of User Interaction
+
+User interaction with the application is handled via keyboard input. The TTY-prompt gem has been used to create a user-friendly main menu for application feature selection. Features are highlighted via the up/down arrow keys and selected with the enter key.
+
+Within the draughts game itself, move selection is handled through keyboard input also. The user is presented with a gameboard with marked positions e.g. a1, c7, h4. The user is able to view where markers are positioned and select a marker to move. This is handled by entering the applicable gameboard position when prompted.
+
+The user is constantly informed as to the state of the game after each move is made via terminal output. This includes the current player turn, current marker counts and the gameboard itself.
+
+I've aimed to handle errors internally within the program so they are not presented to the user. A catch all rescue statement has been included towards the bottom of my call stack (on the main menu) with a generic error statement and `exit`. This is to catch any unexpected errors I have not noticed during development and testing.
+
+Invalid user input has been handled within the application via a combination of conditional while loops and custom exceptions.
 
 ## Control Flow Diagram
 
 ## Implementation Plan
 
-Development of this project will be managed through Trello.
+Development of this project was managed through Trello. I used colored labels to indicate the expected time commitment for specific tasks. Red indicated a time commitment of 4+ hours, orange 2-4 hours and yellow <1 hour.
+
+Features were broken down into smaller tasks, and even separate cards when it made logical sense to do so. I considered all cards bar the `Extra Tasks If Time` to be essential to application development. The project would not be considered feature complete until these cards were finished.
+
+The Trello board I used for project management is available to the public here: [Board](https://trello.com/b/2XPubgdp/terminal-draughts)
+
+Trello board in progress shots:
 
 ## How to Use and Install
+
+This application has several Ruby gem dependencies including:
+
+- Rspec
+- TTY-prompt
+- TTY-progressbar
+- Colorize
+- Date
+
+A gemlock file is included for ease of dependency installation.
+
+If you have bundler installed on your machine

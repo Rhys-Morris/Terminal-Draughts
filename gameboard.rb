@@ -29,8 +29,8 @@ class Gameboard
 
     def initialize(player_one="Player 1", player_two="Player 2")
         @current_board = {}
-        @red_markers = 12
-        @blue_markers = 12
+        @red_markers = 3
+        @blue_markers = 4
         @current_turn = "red"
         @game_live = true
         @winner = nil
@@ -50,12 +50,12 @@ class Gameboard
     def populate_new_board
         # Populate blue markers
         @current_board[:a1] = nil
-        @current_board[:c1] = nil
-        @current_board[:e1] = nil
+        @current_board[:c1] = BlueMarker.new
+        @current_board[:e1] = BlueMarker.new
         @current_board[:g1] = nil
-        @current_board[:b2] = nil
+        @current_board[:b2] = BlueMarker.new
         @current_board[:d2] = nil
-        @current_board[:f2] = nil
+        @current_board[:f2] = RedMarker.new
         @current_board[:h2] = nil
         @current_board[:a3] = nil
         @current_board[:c3] = nil
@@ -63,27 +63,27 @@ class Gameboard
         @current_board[:g3] = nil
 
         # Populate red markers
-        @current_board[:b6] = RedMarker.new
+        @current_board[:b6] = nil
         @current_board[:d6] = nil
         @current_board[:f6] = nil
         @current_board[:h6] = nil
-        @current_board[:a7] = BlueMarker.new
+        @current_board[:a7] = nil
         @current_board[:c7] = nil
         @current_board[:e7] = nil
         @current_board[:g7] = nil
-        @current_board[:b8] = RedMarker.new
+        @current_board[:b8] = nil
         @current_board[:d8] = nil
         @current_board[:f8] = nil
         @current_board[:h8] = nil
 
         # Populate empty spots
         @current_board[:b4] = nil
-        @current_board[:d4] = nil
+        @current_board[:d4] = BlueMarker.new
         @current_board[:f4] = nil
-        @current_board[:h4] = nil
+        @current_board[:h4] = RedMarker.new
         @current_board[:a5] = nil
         @current_board[:c5] = nil
-        @current_board[:e5] = nil
+        @current_board[:e5] = RedMarker.new
         @current_board[:g5] = nil
     end
 
@@ -308,8 +308,9 @@ class Gameboard
 
             # Handle invalid move selection
             else
-                puts "\nInvalid move selection! Please try again!"
+                system "clear"
                 self.print_board
+                puts "\nInvalid move selection! Please try again!"
             end
         end
     end
