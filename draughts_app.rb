@@ -28,6 +28,34 @@ def welcome
     main_menu
 end
 
+def return_prompt
+    prompt = TTY::Prompt.new(
+        active_color: :red,
+        symbols: {marker: "⮊"},
+        quiet: true
+    )
+
+    puts ""
+    menu_selection = prompt.select("Select an option:") do |menu|
+        menu.choice "➊ Return to main menu", 1
+        menu.choice "➋ Exit program", 2
+    end
+
+    case menu_selection
+    when 1
+        welcome
+    when 2
+        puts "\nThanks for playing\n\nGoodbye!"
+        exit
+    else
+        raise InvalidMenu
+    end        
+
+    rescue InvalidMenu
+        puts "Invalid menu input. Please try again!"
+        retry
+end
+
 # Make a selection at main menu
 def main_menu
     prompt = TTY::Prompt.new(
@@ -61,8 +89,8 @@ def main_menu
     rescue InvalidMenu
         puts "Invalid menu input. Please try again!"
         retry
-    # rescue
-    #     puts "An unexpected error has occured. The program will now exit."
+     rescue
+        puts "An unexpected error has occured. The program will now exit."
 end
 
 # Create a new game and allow gameboard logic to control flow
@@ -79,12 +107,7 @@ def start_game
     end
 
     # Prompt to return to main menu
-    puts "\nEnter y when ready to return to menu"
-    selection = ""
-    while selection != "y"
-        selection = gets.chomp.downcase
-    end
-    welcome
+    return_prompt
 end
 
 # How to play instructions
@@ -107,11 +130,9 @@ def instructions
     puts "A marker and move position can be selected by inputting the gameboard position when prompted"
     puts "If the move is valid - it will be made and the board updated.\n\n"
     puts "\nEnter y when ready to return to menu"
-    selection = ""
-    while selection != "y"
-        selection = gets.chomp.downcase
-    end
-    welcome
+    
+    # Return to main menu prompt
+    return_prompt
 end
 
 # Check win history
@@ -149,13 +170,8 @@ def check_win_history
     sorted_leaders.each {|name_count| puts "#{name_count[0]}: #{name_count[1]}"}
     win_history.close
 
-
-    puts "\nEnter y when ready to return to menu"
-    selection = ""
-    while selection != "y"
-        selection = gets.chomp.downcase
-    end
-    welcome
+    # Return to main menu prompt
+    return_prompt
 end
 
 # ----- INITIALISE -----
