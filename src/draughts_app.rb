@@ -118,8 +118,10 @@ def instructions
     █▀█ █▄█ ▀▄▀▄▀   ░█░ █▄█   █▀▀ █▄▄ █▀█ ░█░".colorize(:red)
     puts "\n\n"
     puts "A game will start with 12 red and 12 blue markers."
-    puts "Players will take turns moving their markers until 1 player runs out of markers, at which point the game is over and the player with markers remaining is the winner.\n\n"
-    puts "Markers can be moved diagonally only. If your marker is blocked by a marked of the opposing player, this marker can be jumped providing there is an empty space behind the opposing marker."
+    puts "Players will take turns moving their markers until 1 player runs out of markers, at which point the "
+    puts "game is over and the player with markers remaining is the winner.\n\n"
+    puts "Markers can be moved diagonally only. If your marker is blocked by a marked of the opposing player,"
+    puts "this marker can be jumped providing there is an empty space behind the opposing marker."
     puts "The aim is to jump over all opposing markers to win the game!\n\n"
     puts "Markers can only move in a forward direction, unless they are a king."
     puts "King markers are represented by a 'K' on the gameboard."
@@ -129,7 +131,6 @@ def instructions
     puts "Each position on the gameboard is designated a specific position e.g. a1 or e7"
     puts "A marker and move position can be selected by inputting the gameboard position when prompted"
     puts "If the move is valid - it will be made and the board updated.\n\n"
-    puts "\nEnter y when ready to return to menu"
     
     # Return to main menu prompt
     return_prompt

@@ -1,6 +1,7 @@
 require_relative "./blue_marker"
 require_relative "./red_marker"
 require_relative "./king_marker"
+require_relative "./errors"
 require "colorize"
 require "date"
 
@@ -224,16 +225,20 @@ class Gameboard
         puts "\nSelect a marker to move:"
         selection = gets.chomp.downcase.to_sym
         if !@@cells.include? selection
-            puts "\nInvalid selection. Please select again!"
-            self.select_marker
+            raise InvalidSelection
         else
             if @current_board[selection] == nil || @current_board[selection].color != @current_turn
-                puts "\nInvalid selection. You must select a marker of your color. Please select again!"
-                self.select_marker
+                raise InvalidSelection
             else
                 return @current_board[selection]
             end
         end
+        rescue InvalidSelection
+            system "clear"
+            self.print_board
+            self.print_turn
+            puts "\nInvalid selection. You must select a marker of your color. Please select again!"
+            retry
     end
 
     # Return a position on the gameboard
@@ -241,11 +246,16 @@ class Gameboard
         puts "\nSelect a position to move to:"
         selection = gets.chomp.downcase.to_sym
         if !@@cells.include? selection
-            puts "\nInvalid selection. Please select again!"
-            self.select_move_position
+            raise InvalidSelection
         else
             return selection
         end
+        rescue InvalidSelection
+            system "clear"
+            self.print_board
+            self.print_turn
+            puts "\nInvalid move position. Please select a position on the gameboard!"
+            retry
     end
 
     # Return boolean
@@ -310,7 +320,7 @@ class Gameboard
             else
                 system "clear"
                 self.print_board
-                puts "\nInvalid move selection! Please try again!"
+                puts "\nInvalid move selection! Your marker cannot reach this position. Please try again!"
             end
         end
     end
