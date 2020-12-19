@@ -86,6 +86,20 @@ Trello board in progress shots:
 ![Trello-2](./docs/trello2.PNG)
 ![Trello-3](./docs/trello3.PNG)
 
+**Testing**:
+
+Testing was split between automated unit tests via Rspec and manual testing. Due to the nature of the project quite a lot of manual testing was required to ensure moves were correctly updating the game state and printing correctly to the terminal. Debugging statements were printed tp the terminal to check internal state when bugs were encountered. I created custom Gameboards to check features such as double jumps, king marker movements and king marker conversions were occurring correctly.
+
+Examples:
+
+Custom board to check correct king marker jumping functionality (two 5 move jumps are possible in this scenario).
+
+![Test-1](./docs/test1.PNG)
+
+Custom board to check double jump feature and correct conversion to king marker.
+
+![Test-2](./docs/test2.PNG)
+
 ## **How to Use and Install**
 
 **Requirements**:
