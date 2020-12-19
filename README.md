@@ -60,15 +60,17 @@ Commands included:
 
 User interaction with the application is handled via keyboard input. The TTY-prompt gem has been used to create a user-friendly main menu for application feature selection. Features are highlighted via the up/down arrow keys and selected with the enter key.
 
-Within the draughts game itself, move selection is handled through keyboard input also. The user is presented with a gameboard with marked positions e.g. a1, c7, h4. The user is able to view where markers are positioned and select a marker to move. This is handled by entering the applicable gameboard position when prompted.
+Within the draughts game itself, move selection is also handled through keyboard input. The user is presented a gameboard with marked positions e.g. a1, c7, h4. The user is able to view where markers are positioned on the board, and select a marker to move when prompted. If the marker selected, or move selected, is not valid as per the games rules, the user will be informed of their error and prompted to select again.
 
-The user is constantly informed as to the state of the game after each move is made via terminal output. This includes the current player turn, current marker counts and the gameboard itself.
+The user is constantly informed as to the state of the game after each move via printed terminal output. This includes the current player turn, current marker counts and the gameboard itself.
 
-I've aimed to handle errors internally within the program so they are not presented to the user. A catch all rescue statement has been included towards the bottom of my call stack (on the main menu) with a generic error statement and `exit`. This is to catch any unexpected errors I have not noticed during development and testing.
+Errors are, where possible, handled internally within the program so they are not presented to the user. A catch all rescue statement has been included towards the bottom of the call stack with a generic error statement and `exit`. This is to catch any unexpected errors not noticed during development and testing.
 
 Invalid user input has been handled within the application via a combination of conditional while loops and custom exceptions.
 
 ## **Control Flow Diagram**
+
+![Control Flow Diagram](./docs/control-flow.PNG)
 
 ## **Implementation Plan**
 
@@ -76,7 +78,7 @@ Development of this project was managed through Trello. I used colored labels to
 
 Features were broken down into smaller tasks, and even separate cards when it made logical sense to do so. I considered all cards bar the 'Extra Tasks If Time' to be essential to application development. The project would not be considered feature complete until these cards were finished. Minimal viable product was considered to be a working draughts game, without the extra leaderboard and menu features.
 
-The Trello board I used for project management is available to the public here: [Board](https://trello.com/b/2XPubgdp/terminal-draughts)
+The Trello board I used for project management is available to the public here: [Trello Board](https://trello.com/b/2XPubgdp/terminal-draughts). The activity feed can be used to verify consistent use throughout the project.
 
 Trello board in progress shots:
 
