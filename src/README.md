@@ -1,10 +1,10 @@
 # Terminal Draughts
 
-## Source Control Repository
+## **Source Control Repository**
 
 [Link to Github repository](https://github.com/Rhys-Morris/Terminal-Draughts)
 
-## Software Development Plan
+## **Software Development Plan**
 
 This application is a programmatic implementation of the two person board game draughts written with the Ruby programming language. It allows two players to engage in a game of draughts via the terminal.
 
@@ -18,7 +18,7 @@ This program can be launched by a user in two ways: via the `draughts_app.rb` fi
 
 When the application is launched without command line arguments, the user will be presented with a menu of selectable options via keyboard input. This menu was created via the TTY-prompt gem. The menu options are: starting a new game, viewing the leaderboard, viewing how to play instructions and exiting the application. User's are prompted to return to the main menu when they are finished with a particular feature.
 
-## Application Features
+## **Application Features**
 
 1. Play a two person game of draughts in the terminal
 
@@ -68,9 +68,9 @@ I've aimed to handle errors internally within the program so they are not presen
 
 Invalid user input has been handled within the application via a combination of conditional while loops and custom exceptions.
 
-## Control Flow Diagram
+## **Control Flow Diagram**
 
-## Implementation Plan
+## **Implementation Plan**
 
 Development of this project was managed through Trello. I used colored labels to indicate the expected time commitment for specific tasks. Red indicated a time commitment of 4+ hours, orange 2-4 hours and yellow <1 hour.
 
@@ -80,7 +80,11 @@ The Trello board I used for project management is available to the public here: 
 
 Trello board in progress shots:
 
-## How to Use and Install
+![Trello-1](./docs/trello1.PNG)
+![Trello-2](./docs/trello2.PNG)
+![Trello-3](./docs/trello3.PNG)
+
+## **How to Use and Install**
 
 **Requirements**:
 
@@ -113,12 +117,12 @@ This can be achieved in two ways
 1. Execute `install.sh` within the application directory. This will install bundler on your machine, and then subsequently install the required gem dependencies for the application.
 2. Manual installation:
    - `gem install bundler` within your terminal
-   - Navigate to the root application directory in your terminal `.../Terminal-Draughts`
+   - Navigate to the application directory in your terminal
    - Use the command `gem install` inside this directory to install all gem dependencies
 
 **Running the application**:
 
-The application must be run via the terminal. Navigate to the application directory inside your terminal. `.../Terminal-Draughts`
+The application must be run via the terminal. Navigate to the application directory inside your terminal.
 
 The application can be launched via two ways:
 

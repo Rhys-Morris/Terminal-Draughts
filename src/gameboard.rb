@@ -29,8 +29,8 @@ class Gameboard
 
     def initialize(player_one="Player 1", player_two="Player 2")
         @current_board = {}
-        @red_markers = 3
-        @blue_markers = 4
+        @red_markers = 12
+        @blue_markers = 12
         @current_turn = "red"
         @game_live = true
         @winner = nil
@@ -49,41 +49,41 @@ class Gameboard
 
     def populate_new_board
         # Populate blue markers
-        @current_board[:a1] = nil
+        @current_board[:a1] = BlueMarker.new
         @current_board[:c1] = BlueMarker.new
         @current_board[:e1] = BlueMarker.new
-        @current_board[:g1] = nil
+        @current_board[:g1] = BlueMarker.new
         @current_board[:b2] = BlueMarker.new
-        @current_board[:d2] = nil
-        @current_board[:f2] = RedMarker.new
-        @current_board[:h2] = nil
-        @current_board[:a3] = nil
-        @current_board[:c3] = nil
-        @current_board[:e3] = nil
-        @current_board[:g3] = nil
+        @current_board[:d2] = BlueMarker.new
+        @current_board[:f2] = BlueMarker.new
+        @current_board[:h2] = BlueMarker.new
+        @current_board[:a3] = BlueMarker.new
+        @current_board[:c3] = BlueMarker.new
+        @current_board[:e3] = BlueMarker.new
+        @current_board[:g3] = BlueMarker.new
 
         # Populate red markers
-        @current_board[:b6] = nil
-        @current_board[:d6] = nil
-        @current_board[:f6] = nil
-        @current_board[:h6] = nil
-        @current_board[:a7] = nil
-        @current_board[:c7] = nil
-        @current_board[:e7] = nil
-        @current_board[:g7] = nil
-        @current_board[:b8] = nil
-        @current_board[:d8] = nil
-        @current_board[:f8] = nil
-        @current_board[:h8] = nil
+        @current_board[:b6] = RedMarker.new
+        @current_board[:d6] = RedMarker.new
+        @current_board[:f6] = RedMarker.new
+        @current_board[:h6] = RedMarker.new
+        @current_board[:a7] = RedMarker.new
+        @current_board[:c7] = RedMarker.new
+        @current_board[:e7] = RedMarker.new
+        @current_board[:g7] = RedMarker.new
+        @current_board[:b8] = RedMarker.new
+        @current_board[:d8] = RedMarker.new
+        @current_board[:f8] = RedMarker.new
+        @current_board[:h8] = RedMarker.new
 
         # Populate empty spots
         @current_board[:b4] = nil
-        @current_board[:d4] = BlueMarker.new
+        @current_board[:d4] = nil
         @current_board[:f4] = nil
-        @current_board[:h4] = RedMarker.new
+        @current_board[:h4] = nil
         @current_board[:a5] = nil
         @current_board[:c5] = nil
-        @current_board[:e5] = RedMarker.new
+        @current_board[:e5] = nil
         @current_board[:g5] = nil
     end
 
@@ -322,8 +322,6 @@ class Gameboard
 
             #Handle deletion of jumped markers
             moved_marker.jump_moves[position_moved_to].each do |opposite_marker|
-                puts opposite_marker
-                # puts "Attempting to delete #{@current_board[opposite_marker]}"            # DEBUGGING
                 @current_board[opposite_marker] = nil
 
                 # Decrement marker count
