@@ -41,10 +41,12 @@ describe 'Gameboard' do
     # Decrement marker count method
     describe "decrement_marker_count" do
         it "should decrement marker count by 1 when called" do
+            blue_marker_count = @new_game.blue_markers
+            red_marker_count = @new_game.red_markers
             @new_game.decrement_marker_count('blue')
             @new_game.decrement_marker_count('red')
-            expect(@new_game.blue_markers).to be 11
-            expect(@new_game.red_markers).to be 11
+            expect(@new_game.blue_markers).to be blue_marker_count - 1
+            expect(@new_game.red_markers).to be red_marker_count - 1
         end
     end
 
